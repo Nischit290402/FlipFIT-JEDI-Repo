@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class GymOwnerFlipfitMenu {
-    public static void main(String[] args){
-    }
 public static void registerGymOwner() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("Enter your Username");
@@ -29,4 +27,5 @@ public static void registerGymOwner() {
 public static void showGymOwnerList() {
         GymOwnerBusiness.listGymOwners();
 }
+
 }
