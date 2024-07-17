@@ -17,8 +17,6 @@ public static void registerGymOwner() {
     String password = scanner.nextLine();
     System.out.println("Enter your Name");
     String name = scanner.nextLine();
-    System.out.println("Enter your Address");
-    String address = scanner.nextLine();
     System.out.println("Enter your Phone");
     String phone = scanner.nextLine();
     System.out.println("Enter your Email");
