@@ -1,5 +1,4 @@
 package com.flipkart.bean;
 
-public class Customer {
-
+public class Auth {
 }
