@@ -4,11 +4,11 @@ public class User {
     private String username;
     private String Name;
     private String Email;
-    private int contactNo;
+    private String contactNo;
     private int age;
     private String password;
     private String ID;
-    public User(String username, String Name, String Email, int contactNo, int age, String password, String ID){
+    public User(String username, String Name, String Email, String contactNo, int age, String password, String ID){
         this.username=username;
         this.Name=Name;
         this.Email=Email;
@@ -58,11 +58,11 @@ public class User {
         Email = email;
     }
 
-    public int getContactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setContactNo(int contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
