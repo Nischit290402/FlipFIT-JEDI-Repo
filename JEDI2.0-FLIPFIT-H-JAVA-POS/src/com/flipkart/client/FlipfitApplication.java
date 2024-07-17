@@ -3,14 +3,13 @@ package com.flipkart.client;
 import java.util.Scanner;
 
 public class FlipfitApplication {
-
-//    private static AuthenticationService authService = new AuthenticationService();
-//    private static CustomerService customerService = new CustomerService();
-//    private static OwnerService ownerService = new OwnerService();
-//    private static AdminService adminService = new AdminService();
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Flipfit");
+        System.out.println("Welcome to Admin Menu");
+
+        AdminFlipfitMenu adminMenu = new AdminFlipfitMenu(scanner);
+        adminMenu.showMenu();
         int choice = -1;
 
         while (choice != 5) {
@@ -46,4 +45,3 @@ public class FlipfitApplication {
         }
     }
 }
-
