@@ -10,27 +10,38 @@ public class FlipfitApplication {
 
         AdminFlipfitMenu adminMenu = new AdminFlipfitMenu(scanner);
         adminMenu.showMenu();
+        int choice = -1;
 
-        scanner.close(); // Optionally close the scanner when done
+        while (choice != 5) {
+            System.out.println("Welcome to the Flipfit Application:");
+            System.out.println("1. Login");
+            System.out.println("2. Registration of the GYM Customer");
+            System.out.println("3. Registration of the GYM Owner");
+            System.out.println("4. Change Password");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline
+
+            switch (choice) {
+                case 1:
+                    // Call the Handle login file
+                    break;
+                case 2:
+                    // Call the registration method for Gym Customer
+                    break;
+                case 3:
+                    // Call the registration method for Gym Owner
+                    break;
+                case 4:
+                    // Call the change password method
+                    break;
+                case 5:
+                    System.out.println("Exiting the application.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
 }
-
-
-//    private static void handleLogin(Scanner scanner) {
-//        System.out.println("Enter username: ");
-//        String username = scanner.nextLine();
-//        System.out.println("Enter password: ");
-//        String password = scanner.nextLine();
-//
-//        // Simulate authentication logic
-//        boolean isAuthenticated = username.equals("admin") && password.equals("password");
-//
-//        if (isAuthenticated) {
-//            System.out.println("Login successful.");
-//            AdminMenu adminMenu = new AdminMenu(scanner);
-//            adminMenu.showMenu();
-//        } else {
-//            System.out.println("Login failed. Please try again.");
-//        }
-//    }
-
