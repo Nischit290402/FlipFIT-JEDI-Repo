@@ -1,5 +1,13 @@
 package com.flipkart.client;
 
+
+import com.flipkart.bean.Customer;
+import com.flipkart.bean.GymOwner;
+import com.flipkart.client.GymOwnerFlipfitMenu;
+
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class FlipfitApplication {
@@ -30,8 +38,9 @@ public class FlipfitApplication {
                 case 2:
                     // Call the registration method for Gym Customer
                     break;
-                case 3:
-                    // Call the registration method for Gym Owner
+                 case 3:
+                    GymOwnerFlipfitMenu.registerGymOwner();
+                    System.out.println("Gym Owner Registered");
                     break;
                 case 4:
                     // Call the change password method
@@ -44,4 +53,7 @@ public class FlipfitApplication {
             }
         }
     }
+
+
 }
+
