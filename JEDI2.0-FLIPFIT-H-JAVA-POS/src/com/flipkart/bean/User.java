@@ -2,68 +2,37 @@ package com.flipkart.bean;
 
 public class User {
     private String username;
-    private String name;
-    private String email;
-    private String phone;
-    private int age;
     private String password;
-    private String id;
-    public User(String username, String name, String email, String phone, int age, String password, String id){
+    private String userid;
+    private Role role;
+    public User(String username, String password, String id, Role role){
         this.username=username;
-        this.name=name;
-        this.email=email;
-        this.phone=phone;
-        this.age=age;
         this.password=password;
-        this.id=id;
+        this.userid =id;
+        this.role =role;
     }
 
-    public int getAge() {
-        return age;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public String getID() {
-        return id;
+    public Role getRole() {
+        return role;
     }
 
-    public void setID(String ID) {
-        this.id = ID;
+    public void setRole(Role role) {
+        this.role = role;
     }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContactNo() {
-        return phone;
-    }
-
-    public void setContactNo(String phone) {
-        this.phone = phone;
     }
 
     public String getPassword() {
