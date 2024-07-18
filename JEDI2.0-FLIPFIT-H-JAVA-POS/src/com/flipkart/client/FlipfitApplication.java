@@ -73,17 +73,17 @@ public class FlipfitApplication {
             switch (role) {
                 case 'A':
                     System.out.println("Welcome Admin !!!");
-                    adminFlipfitMenu.showMenu();
+                    adminFlipfitMenu.showMenu(user);
                     break;
                 case 'B':
                     System.out.println("Welcome GymOwner !!!");
                     GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
-                    gymOwnerFlipfitMenu.showMenu();
+                    gymOwnerFlipfitMenu.showMenu(user);
                     break;
                 case 'C':
                     System.out.println("Welcome Customer !!!");
                     CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
-                    customerFlipfitMenu.showMenu();
+                    customerFlipfitMenu.showMenu(user);
                     break;
                 default: System.out.println("Invalid choice. Please try again.");
 
