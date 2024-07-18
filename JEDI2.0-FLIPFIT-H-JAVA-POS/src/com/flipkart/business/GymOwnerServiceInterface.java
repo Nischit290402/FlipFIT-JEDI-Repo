@@ -1,11 +1,14 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
+
 
 import static com.flipkart.business.UserServiceInterface.addUser;
 
@@ -25,6 +28,37 @@ public class GymOwnerServiceInterface {
         System.out.println("Gym Owner registered successfully");
     }
 
+    public static void addGymCenter(User user) {
+//        String gymID, String gymName, String address, String city
+//        String id = user.getUserid();
+        GymOwner tempGymOwner = GymOwnerMap.get(user.getUserid());
+        System.out.println("Registering Gym Center");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Gym Centre Name: ");
+        String gymName = scanner.nextLine();
+        System.out.println("Enter Gym Centre Address: ");
+        String address = scanner.nextLine();
+        System.out.println("Enter Gym Centre City: ");
+        String city = scanner.nextLine();
+        String id = "GC" + tempGymOwner.gymCenters.size()+1;
+        GymCenter gymCenter = new GymCenter(id, gymName, address, city);
+        tempGymOwner.gymCenters.add(gymCenter);
+        GymOwnerMap.put(user.getUserid(), tempGymOwner);
+        System.out.println("Gym Center added successfully");
+    }
+
+    public static void showGymCenters(User user) {
+        GymOwner gymOwner = GymOwnerMap.get(user.getUserid());
+        System.out.println(gymOwner.gymCenters.get(gymOwner.gymCenters.size()-1));
+//        print all gym centers
+
+        for (GymCenter element : gymOwner.gymCenters) {
+            System.out.println(element);
+            }
+    }
+    public static void editSlots(User user){
+        System.out.println("Enter Gym Centre Name: ");
+    }
     public boolean updateGymOwner(int gymOwnerId) {
         System.out.println("Updating Gym Owner --> " + gymOwnerId);
         return true;

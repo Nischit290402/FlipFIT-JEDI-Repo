@@ -37,41 +37,30 @@ public class GymOwnerFlipfitMenu {
     }
 
     public void showMenu(User user){
-        int adminChoice = -1;
+        int gymOwnerChoice = -1;
 
-        while (adminChoice != 6) {
+        while (gymOwnerChoice != 6) {
             System.out.println("Gym Owner Menu:");
-            System.out.println("1. Approve Gym Center");
-            System.out.println("2. Approve Gym Owner");
-            System.out.println("3. List Gym Owners");
-            System.out.println("4. List Gym Centers");
-            System.out.println("5. List Users");
-            System.out.println("6. Change Password");
-            System.out.println("7. Logout");
+            System.out.println("1. View all Gym Center");
+            System.out.println("2. Add New Gym Center");
+            System.out.println("3. Edit Gym Slots");
+            System.out.println("4. Logout");
             System.out.print("Enter your choice: ");
-            adminChoice = scanner.nextInt();
-            scanner.nextLine(); // consume the newline
+            gymOwnerChoice = scanner.nextInt();
+            scanner.nextLine();
 
-            switch (adminChoice) {
+            switch (gymOwnerChoice) {
                 case 1:
-//                    gymOwnerBusiness.approveGymCenter();
+                    GymOwnerServiceInterface.showGymCenters(user);
                     break;
                 case 2:
-//                    gymOwnerBusiness.approveGymOwner();
+                    GymOwnerServiceInterface.addGymCenter(user);
                     break;
                 case 3:
-//                    gymOwnerBusiness.listGymOwners();
+                    GymOwnerServiceInterface.editSlots(user);
                     break;
                 case 4:
-//                    gymOwnerBusiness.listGymCenters();
-                    break;
-                case 5:
-//                    gymOwnerBusiness.listUsers();
-                    break;
-                case 6:
-                      changePassword(user);
-                case 7:
-//                    System.out.println("Logging out.");
+//                    GymOwnerServiceInterface.logout();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");

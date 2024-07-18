@@ -1,11 +1,12 @@
 package com.flipkart.bean;
 
-public class GymCentre {
+public class GymCenter {
     private String gymID;
     private String gymName;
     private String address;
     private String city;
 
+    public GymCenter(String gymID, String gymName, String address, String city) {}
     public String getGymID() {
         return gymID;
     }

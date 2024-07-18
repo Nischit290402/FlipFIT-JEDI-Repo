@@ -69,8 +69,8 @@ public class FlipfitApplication {
         User user = UserServiceInterface.Login(username, password);
         if (user != null) {
             System.out.println("Logged in successfully.");
-            String id = user.getID();
-            char role = user.getID().charAt(0);
+            String id = user.getUserid();
+            char role = user.getUserid().charAt(0);
             switch (role) {
                 case 'A':
                     System.out.println("Welcome Admin !!!");
