@@ -1,20 +1,24 @@
 package com.flipkart.client;
 
+import com.flipkart.business.AdminService;
+import java.util.Scanner;
+import com.flipkart.bean.GymCentre;
+import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Admin;
 import com.flipkart.business.AdminServiceInterface;
 import com.flipkart.business.UserServiceInterface;
 
-import java.util.Scanner;
 import com.flipkart.bean.User;
 
 public class AdminFlipfitMenu {
     private Scanner scanner;
+    private AdminService adminServiceInterface;
     private AdminServiceInterface adminServiceInterface;
     private UserServiceInterface userServiceInterface;
 
     public AdminFlipfitMenu(Scanner scanner) {
         this.scanner = scanner;
-        this.adminServiceInterface = new AdminServiceInterface();
+        this.adminServiceInterface = new AdminService();
     }
 
     public void showMenu(User user) {
@@ -35,10 +39,10 @@ public class AdminFlipfitMenu {
 
             switch (adminChoice) {
                 case 1:
-                    adminServiceInterface.approveGymCenter();
+                    showApproveGymCenterMenu();
                     break;
                 case 2:
-                    adminServiceInterface.approveGymOwner();
+                    showApproveGymOwnerMenu();
                     break;
                 case 3:
                     adminServiceInterface.listGymOwners();
@@ -59,6 +63,66 @@ public class AdminFlipfitMenu {
             }
         }
     }
+
+
+    private void showApproveGymCenterMenu() {
+        int approveChoice = -1;
+
+        while (approveChoice != 3) {
+            System.out.println("Approve Gym Center:");
+            System.out.println("1. Approve All Gym Centers");
+            System.out.println("2. Approve Gym Center by ID");
+            System.out.println("3. Back to Admin Menu");
+            System.out.print("Enter your choice: ");
+            approveChoice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline
+
+            switch (approveChoice) {
+                case 1:
+                    adminServiceInterface.approveAllGymCenters();
+                    break;
+                case 2:
+                    System.out.print("Enter Gym Center ID: ");
+                    String centerId = scanner.nextLine();
+                    adminServiceInterface.approveGymCenterById(centerId);
+                    break;
+                case 3:
+                    System.out.println("Returning to Admin Menu.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+
+    private void showApproveGymOwnerMenu() {
+        int approveChoice = -1;
+
+        while (approveChoice != 3) {
+            System.out.println("Approve Gym Owner:");
+            System.out.println("1. Approve All Gym Owners");
+            System.out.println("2. Approve Gym Owner by ID");
+            System.out.println("3. Back to Admin Menu");
+            System.out.print("Enter your choice: ");
+            approveChoice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline
+
+            switch (approveChoice) {
+                case 1:
+                    adminServiceInterface.approveAllGymOwners();
+                    break;
+                case 2:
+                    System.out.print("Enter Gym Owner ID: ");
+                    String Id = scanner.nextLine();
+                    adminServiceInterface.approveGymOwnerById(Id);
+                    break;
+                case 3:
+                    System.out.println("Returning to Admin Menu.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
 
     public void changePassword(User user) {
         System.out.println("Enter your Old Password");
