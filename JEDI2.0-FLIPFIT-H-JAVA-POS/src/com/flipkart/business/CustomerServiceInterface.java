@@ -2,6 +2,8 @@ package com.flipkart.business;
 
 import com.flipkart.bean.Customer;
 import java.util.Scanner;
+
+import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 
 import java.util.HashMap;
@@ -14,10 +16,11 @@ public class CustomerServiceInterface {
 
 	public static void createCustomer(String username, String name, String email, String phone, int age,
 			String password) {
-		String id = "C_" + cnt++;
-		Customer customer = new Customer(username, name, email, phone, age, id, password);
+		String id = "0" + cnt++;
+		Role role = new Role("C", "Customer");
+		Customer customer = new Customer(username, name, email, phone, age, id, password, role);
 		customers.put(id, customer);
-		User user = new User(username, name, email, phone, age, password, id);
+		User user = new User(username, password, id, role);
 		addUser(user);
 		System.out.println("Customer created");
 	}
@@ -28,9 +31,8 @@ public class CustomerServiceInterface {
 			System.out.println("Username: " + customer.getUsername());
 			System.out.println("Name: " + customer.getName());
 			System.out.println("Email: " + customer.getEmail());
-			System.out.println("Phone: " + customer.getContactNo());
+			System.out.println("Phone: " + customer.getPhone());
 			System.out.println("Age: " + customer.getAge());
-			System.out.println("ID: " + customer.getID());
 		} else {
 			System.out.println("Customer not found.");
 		}
@@ -47,7 +49,7 @@ public class CustomerServiceInterface {
 
 		Scanner scanner = new Scanner(System.in);
 
-		Customer customer = customers.get(user.getID());
+		Customer customer = customers.get(user.getUserid());
 
 		if (customer != null) {
 
@@ -80,7 +82,7 @@ public class CustomerServiceInterface {
 					break;
 				case 4:
 					System.out.println("Enter new phone:");
-					customer.setContactNo(scanner.nextLine());
+					customer.setPhone(scanner.nextLine());
 					break;
 				case 5:
 					System.out.println("Enter new age:");
