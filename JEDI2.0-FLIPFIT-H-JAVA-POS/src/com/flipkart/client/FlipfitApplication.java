@@ -1,6 +1,7 @@
 package com.flipkart.client;
 
 
+import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 import com.flipkart.business.UserServiceInterface;
 
@@ -70,18 +71,20 @@ public class FlipfitApplication {
         if (user != null) {
             System.out.println("Logged in successfully.");
             String id = user.getUserid();
-            char role = user.getUserid().charAt(0);
-            switch (role) {
-                case 'A':
+//            char role = user.getID().charAt(0);
+//            role = user.getRoleID()
+            Role role = user.getRole();
+            switch (role.getRoleID()) {
+                case "A":
                     System.out.println("Welcome Admin !!!");
                     adminFlipfitMenu.showMenu(user);
                     break;
-                case 'B':
+                case "B":
                     System.out.println("Welcome GymOwner !!!");
                     GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
                     gymOwnerFlipfitMenu.showMenu(user);
                     break;
-                case 'C':
+                case "C":
                     System.out.println("Welcome Customer !!!");
                     CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
                     customerFlipfitMenu.showMenu(user);
