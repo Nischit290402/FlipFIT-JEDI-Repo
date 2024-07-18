@@ -1,6 +1,7 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 
 import java.util.HashMap;
@@ -14,11 +15,11 @@ public class GymOwnerServiceInterface {
     public static HashMap<String, GymOwner> GymOwnerMap  = new HashMap<String,GymOwner>();
     public static void createGymOwner(String username, String name, String mail, String phone, int age, String password) {
         System.out.println("Registering Gym Owner");
-        String id = "B_" + cnt++;
-        GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password,id);
+        String id = "0" + cnt++;
+        Role role=new Role("B", "GymOwner");
+        GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password, id, role);
         GymOwnerMap.put(mail, gymOwner);
-
-        User user = new User(username, name, mail, phone, age, password, id);
+        User user = new User(username, password, id, role);
         addUser(user);
 
         System.out.println("Gym Owner registered successfully");
