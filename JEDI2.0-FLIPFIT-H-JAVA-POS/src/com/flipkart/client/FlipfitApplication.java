@@ -68,6 +68,7 @@ public class FlipfitApplication {
         User user = UserServiceInterface.Login(username, password);
         if (user != null) {
             System.out.println("Logged in successfully.");
+            String id = user.getID();
             char role = user.getID().charAt(0);
             switch (role) {
                 case 'A':
@@ -82,7 +83,7 @@ public class FlipfitApplication {
                 case 'C':
                     System.out.println("Welcome Customer !!!");
                     CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
-                    customerFlipfitMenu.showMenu();
+                    customerFlipfitMenu.showMenu(user);
                     break;
                 default: System.out.println("Invalid choice. Please try again.");
 
@@ -92,4 +93,3 @@ public class FlipfitApplication {
 
 
 }
-
