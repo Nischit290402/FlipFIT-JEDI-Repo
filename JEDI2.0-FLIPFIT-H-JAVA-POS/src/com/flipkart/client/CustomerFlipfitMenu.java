@@ -46,7 +46,7 @@ public class CustomerFlipfitMenu {
 
             switch (userChoice) {
                 case 1:
-                    CustomerServiceInterface.showProfile(user.getID());
+                    CustomerServiceInterface.showProfile(user.getUserid());
                     break;
                 case 2:
                 	CustomerServiceInterface.editProfile(user);

@@ -5,15 +5,16 @@ import java.util.Scanner;
 import com.flipkart.bean.GymCentre;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Admin;
+import com.flipkart.bean.User;
 import com.flipkart.business.AdminServiceInterface;
 import com.flipkart.business.UserServiceInterface;
 
 import com.flipkart.bean.User;
 
 public class AdminFlipfitMenu {
-    private Scanner scanner;
-    private AdminService adminServiceInterface;
-    private AdminServiceInterface adminServiceInterface;
+    private final Scanner scanner;
+    // private AdminService adminServiceInterface;
+    private final AdminServiceInterface adminServiceInterface;
     private UserServiceInterface userServiceInterface;
 
     public AdminFlipfitMenu(Scanner scanner) {
@@ -64,7 +65,6 @@ public class AdminFlipfitMenu {
         }
     }
 
-
     private void showApproveGymCenterMenu() {
         int approveChoice = -1;
 
@@ -95,7 +95,6 @@ public class AdminFlipfitMenu {
         }
     }
 
-
     private void showApproveGymOwnerMenu() {
         int approveChoice = -1;
 
@@ -123,21 +122,24 @@ public class AdminFlipfitMenu {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+
+    }
 
     public void changePassword(User user) {
         System.out.println("Enter your Old Password");
         String password = scanner.nextLine();
         boolean flag = userServiceInterface.validatePassword(user, password);
-        if(flag){
+        if (flag) {
             System.out.println("Enter your New Password");
             String newPassword = scanner.nextLine();
             System.out.println("Confirm your Password");
             String confirmPassword = scanner.nextLine();
             userServiceInterface.confirmPassword(user, newPassword, confirmPassword);
-//            System.out.println("Password changed successfully.");
-        }
-        else{
+            // System.out.println("Password changed successfully.");
+        } else {
             System.out.println("Wrong Old Password.");
         }
     }
+
 }
