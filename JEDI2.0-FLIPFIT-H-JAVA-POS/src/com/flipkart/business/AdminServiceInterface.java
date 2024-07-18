@@ -1,8 +1,21 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.Admin;
+import com.flipkart.bean.User;
 
-public class AdminBusiness {
+import static com.flipkart.business.UserServiceInterface.addUser;
+
+public class AdminServiceInterface {
+    public AdminServiceInterface(){
+        initializeAdmin();
+    }
+
+    private void initializeAdmin() {
+        Admin admin = new Admin("bean", "BeanAdmin", "bean@gmail.com", "1234567890", 0, "bean@1234", "A_0");
+        User user = new User(admin.getUsername(), admin.getName(), admin.getEmail(), admin.getContactNo(), admin.getAge(), admin.getPassword(), admin.getID());
+        addUser(user);
+    }
+
     public void approveGymCenter() {
         System.out.println("Gym center approved");
     }

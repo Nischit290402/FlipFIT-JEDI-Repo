@@ -1,19 +1,16 @@
 package com.flipkart.client;
 
-import com.flipkart.business.GymOwnerServiceInterface;
+import com.flipkart.business.CustomerServiceInterface;
 
 import java.util.Scanner;
 
-public class GymOwnerFlipfitMenu {
-    private Scanner scanner;
-    private GymOwnerServiceInterface gymOwnerServiceInterface;
-
-    public GymOwnerFlipfitMenu(Scanner scanner) {
+public class CustomerFlipfitMenu {
+    private Scanner scanner = new Scanner(System.in);
+    public CustomerFlipfitMenu(Scanner scanner) {
         this.scanner = scanner;
-        this.gymOwnerServiceInterface = new GymOwnerServiceInterface();
     }
 
-    public static void registerGymOwner(Scanner scanner) {
+    public static void registerCustomer(Scanner scanner){
         System.out.println("Enter your Username");
         String username = scanner.nextLine();
         System.out.println("Enter your Password");
@@ -27,17 +24,14 @@ public class GymOwnerFlipfitMenu {
         System.out.println("Enter your Age");
         int age = Integer.parseInt(scanner.nextLine());
 
-        GymOwnerServiceInterface.createGymOwner(username,name, mail, phone, age, password);
-    }
-    public static void showGymOwnerList() {
-        GymOwnerServiceInterface.listGymOwners();
+        CustomerServiceInterface.createCustomer(username, name, mail, phone, age, password);
     }
 
-    public void showMenu(){
-        int adminChoice = -1;
+    public void showMenu() {
+        int userChoice = -1;
 
-        while (adminChoice != 6) {
-            System.out.println("Admin Menu:");
+        while (userChoice != 6) {
+            System.out.println("Customer Menu:");
             System.out.println("1. Approve Gym Center");
             System.out.println("2. Approve Gym Owner");
             System.out.println("3. List Gym Owners");
@@ -45,10 +39,10 @@ public class GymOwnerFlipfitMenu {
             System.out.println("5. List Users");
             System.out.println("6. Logout");
             System.out.print("Enter your choice: ");
-            adminChoice = scanner.nextInt();
+            userChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
 
-            switch (adminChoice) {
+            switch (userChoice) {
                 case 1:
 //                    gymOwnerBusiness.approveGymCenter();
                     break;
@@ -72,5 +66,4 @@ public class GymOwnerFlipfitMenu {
             }
         }
     }
-
 }

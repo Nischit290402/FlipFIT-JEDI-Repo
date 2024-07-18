@@ -1,22 +1,27 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.User;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+
+import static com.flipkart.business.UserServiceInterface.addUser;
 
 
-public class GymOwnerBusiness {
+public class GymOwnerServiceInterface {
     private static int cnt = 1;
     public static HashMap<String, GymOwner> GymOwnerMap  = new HashMap<String,GymOwner>();
     public static void createGymOwner(String username, String name, String mail, String phone, int age, String password) {
-        System.out.println("Creating Gym Owner");
-        String id = "B" + cnt++;
+        System.out.println("Registering Gym Owner");
+        String id = "B_" + cnt++;
         GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password,id);
         GymOwnerMap.put(mail, gymOwner);
-        System.out.println("Gym Owner created");
+
+        User user = new User(username, name, mail, phone, age, password, id);
+        addUser(user);
+
+        System.out.println("Gym Owner registered successfully");
     }
 
     public boolean updateGymOwner(int gymOwnerId) {
@@ -37,7 +42,7 @@ public class GymOwnerBusiness {
             GymOwner gymOwner = gymOwnerIterator.next();
             System.out.println(gymOwner);
         };
-
     }
+
 }
 

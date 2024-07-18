@@ -1,15 +1,15 @@
 package com.flipkart.client;
 
-import com.flipkart.business.AdminBusiness;
+import com.flipkart.business.AdminServiceInterface;
 import java.util.Scanner;
 
 public class AdminFlipfitMenu {
     private Scanner scanner;
-    private AdminBusiness adminBusiness;
+    private AdminServiceInterface adminServiceInterface;
 
     public AdminFlipfitMenu(Scanner scanner) {
         this.scanner = scanner;
-        this.adminBusiness = new AdminBusiness();
+        this.adminServiceInterface = new AdminServiceInterface();
     }
 
     public void showMenu() {
@@ -29,19 +29,19 @@ public class AdminFlipfitMenu {
 
             switch (adminChoice) {
                 case 1:
-                    adminBusiness.approveGymCenter();
+                    adminServiceInterface.approveGymCenter();
                     break;
                 case 2:
-                    adminBusiness.approveGymOwner();
+                    adminServiceInterface.approveGymOwner();
                     break;
                 case 3:
-                    adminBusiness.listGymOwners();
+                    adminServiceInterface.listGymOwners();
                     break;
                 case 4:
-                    adminBusiness.listGymCenters();
+                    adminServiceInterface.listGymCenters();
                     break;
                 case 5:
-                    adminBusiness.listUsers();
+                    adminServiceInterface.listUsers();
                     break;
                 case 6:
                     System.out.println("Logging out.");

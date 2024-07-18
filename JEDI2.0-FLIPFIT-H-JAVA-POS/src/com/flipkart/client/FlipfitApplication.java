@@ -1,23 +1,21 @@
 package com.flipkart.client;
 
 
-import com.flipkart.bean.Customer;
-import com.flipkart.bean.GymOwner;
-import com.flipkart.client.GymOwnerFlipfitMenu;
+import com.flipkart.bean.User;
+import com.flipkart.business.UserServiceInterface;
 
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class FlipfitApplication {
+    public static AdminFlipfitMenu adminFlipfitMenu;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to Flipfit");
-        System.out.println("Welcome to Admin Menu");
+        adminFlipfitMenu = new AdminFlipfitMenu(scanner);
 
-        AdminFlipfitMenu adminMenu = new AdminFlipfitMenu(scanner);
-        adminMenu.showMenu();
+        System.out.println("Welcome to Flipfit");
+//        AdminFlipfitMenu adminMenu = new AdminFlipfitMenu(scanner);
+
         int choice = -1;
 
         while (choice != 5) {
@@ -34,12 +32,14 @@ public class FlipfitApplication {
             switch (choice) {
                 case 1:
                     // Call the Handle login file
+                    handleLogin();
                     break;
                 case 2:
-                    // Call the registration method for Gym Customer
+                    CustomerFlipfitMenu.registerCustomer(scanner);
+                    System.out.println("Customer Registered");
                     break;
                  case 3:
-                    GymOwnerFlipfitMenu.registerGymOwner();
+                    GymOwnerFlipfitMenu.registerGymOwner(scanner);
                     System.out.println("Gym Owner Registered");
                     break;
                 case 4:
@@ -50,6 +50,42 @@ public class FlipfitApplication {
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    public static void handleLogin(){
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user for email and password
+//        System.out.print("Enter email: ");
+//        String email = scanner.nextLine();
+        System.out.println("Enter your username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        User user = UserServiceInterface.Login(username, password);
+        if (user != null) {
+            System.out.println("Logged in successfully.");
+            char role = user.getID().charAt(0);
+            switch (role) {
+                case 'A':
+                    System.out.println("Welcome Admin !!!");
+                    adminFlipfitMenu.showMenu();
+                    break;
+                case 'B':
+                    System.out.println("Welcome GymOwner !!!");
+                    GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
+                    gymOwnerFlipfitMenu.showMenu();
+                    break;
+                case 'C':
+                    System.out.println("Welcome Customer !!!");
+                    CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
+                    customerFlipfitMenu.showMenu();
+                    break;
+                default: System.out.println("Invalid choice. Please try again.");
+
             }
         }
     }
