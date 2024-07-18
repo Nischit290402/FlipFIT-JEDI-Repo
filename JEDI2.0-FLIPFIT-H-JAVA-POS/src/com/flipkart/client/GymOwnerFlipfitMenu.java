@@ -1,16 +1,19 @@
 package com.flipkart.client;
 
 import com.flipkart.business.GymOwnerServiceInterface;
-
+import com.flipkart.business.UserServiceInterface;
+import com.flipkart.bean.User;
 import java.util.Scanner;
 
 public class GymOwnerFlipfitMenu {
     private Scanner scanner;
     private GymOwnerServiceInterface gymOwnerServiceInterface;
+    private UserServiceInterface userServiceInterface;
 
     public GymOwnerFlipfitMenu(Scanner scanner) {
         this.scanner = scanner;
         this.gymOwnerServiceInterface = new GymOwnerServiceInterface();
+        this.userServiceInterface = new UserServiceInterface();
     }
 
     public static void registerGymOwner(Scanner scanner) {
@@ -33,17 +36,18 @@ public class GymOwnerFlipfitMenu {
         GymOwnerServiceInterface.listGymOwners();
     }
 
-    public void showMenu(){
+    public void showMenu(User user){
         int adminChoice = -1;
 
         while (adminChoice != 6) {
-            System.out.println("Admin Menu:");
+            System.out.println("Gym Owner Menu:");
             System.out.println("1. Approve Gym Center");
             System.out.println("2. Approve Gym Owner");
             System.out.println("3. List Gym Owners");
             System.out.println("4. List Gym Centers");
             System.out.println("5. List Users");
-            System.out.println("6. Logout");
+            System.out.println("6. Change Password");
+            System.out.println("7. Logout");
             System.out.print("Enter your choice: ");
             adminChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
@@ -65,11 +69,29 @@ public class GymOwnerFlipfitMenu {
 //                    gymOwnerBusiness.listUsers();
                     break;
                 case 6:
+                      changePassword(user);
+                case 7:
 //                    System.out.println("Logging out.");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+    }
+    public void changePassword(User user) {
+        System.out.println("Enter your Old Password");
+        String password = scanner.nextLine();
+        boolean flag = userServiceInterface.validatePassword(user, password);
+        if(flag){
+            System.out.println("Enter your New Password");
+            String newPassword = scanner.nextLine();
+            System.out.println("Confirm your Password");
+            String confirmPassword = scanner.nextLine();
+            userServiceInterface.confirmPassword(user, newPassword, confirmPassword);
+//            System.out.println("Password changed successfully.");
+        }
+        else{
+            System.out.println("Wrong Old Password.");
         }
     }
 

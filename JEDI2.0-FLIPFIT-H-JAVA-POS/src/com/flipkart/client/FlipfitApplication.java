@@ -44,6 +44,7 @@ public class FlipfitApplication {
                     break;
                 case 4:
                     // Call the change password method
+                    ForgotPasswordMenu.forgotpassword(scanner);
                     break;
                 case 5:
                     System.out.println("Exiting the application.");
@@ -72,17 +73,17 @@ public class FlipfitApplication {
             switch (role) {
                 case 'A':
                     System.out.println("Welcome Admin !!!");
-                    adminFlipfitMenu.showMenu();
+                    adminFlipfitMenu.showMenu(user);
                     break;
                 case 'B':
                     System.out.println("Welcome GymOwner !!!");
                     GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
-                    gymOwnerFlipfitMenu.showMenu();
+                    gymOwnerFlipfitMenu.showMenu(user);
                     break;
                 case 'C':
                     System.out.println("Welcome Customer !!!");
                     CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
-                    customerFlipfitMenu.showMenu();
+                    customerFlipfitMenu.showMenu(user);
                     break;
                 default: System.out.println("Invalid choice. Please try again.");
 
