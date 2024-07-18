@@ -2,6 +2,9 @@ package com.flipkart.business;
 
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.User;
+import com.flipkart.business.UserServiceInterface;
+
+import java.util.Scanner;
 
 import static com.flipkart.business.UserServiceInterface.addUser;
 
@@ -35,6 +38,7 @@ public class AdminServiceInterface {
     public void listUsers() {
         System.out.println("This is the list of users");
     }
+
 }
 
 
