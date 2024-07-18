@@ -1,6 +1,7 @@
 package com.flipkart.client;
 
 import com.flipkart.business.CustomerServiceInterface;
+import com.flipkart.bean.User;
 import com.flipkart.business.UserServiceInterface;
 
 import java.util.Scanner;
@@ -36,38 +37,25 @@ public class CustomerFlipfitMenu {
 
         while (userChoice != 6) {
             System.out.println("Customer Menu:");
-            System.out.println("1. Approve Gym Center");
-            System.out.println("2. Approve Gym Owner");
-            System.out.println("3. List Gym Owners");
-            System.out.println("4. List Gym Centers");
-            System.out.println("5. List Users");
-            System.out.println("6. Change Password");
-            System.out.println("7. Logout");
+            System.out.println("1. View Profile");
+            System.out.println("2. Edit Profile");
+            System.out.println("3. View Bookings");
             System.out.print("Enter your choice: ");
             userChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
 
             switch (userChoice) {
                 case 1:
-//                    gymOwnerBusiness.approveGymCenter();
+                    CustomerServiceInterface.showProfile(user.getID());
                     break;
                 case 2:
-//                    gymOwnerBusiness.approveGymOwner();
+                	CustomerServiceInterface.editProfile(user);
                     break;
                 case 3:
-//                    gymOwnerBusiness.listGymOwners();
+                	CustomerServiceInterface.viewBookings();
                     break;
-                case 4:
-//                    gymOwnerBusiness.listGymCenters();
-                    break;
-                case 5:
-//                    gymOwnerBusiness.listUsers();
-                    break;
-                case 6:
-                      changePassword(user);
-                case 7:
-//                    System.out.println("Logging out.");
-                    break;
+                
+                    
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
