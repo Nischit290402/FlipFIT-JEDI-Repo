@@ -10,9 +10,10 @@ import java.util.Scanner;
 
 public class FlipfitApplication {
     AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
-    public void main(String[] args) {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        adminFlipfitMenu = new AdminFlipfitMenu();
+        FlipfitApplication app = new FlipfitApplication();
+        AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
         CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
         ForgotPasswordMenu forgotPasswordMenu = new ForgotPasswordMenu(scanner);
         GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
@@ -36,7 +37,7 @@ public class FlipfitApplication {
             switch (choice) {
                 case 1:
                     // Call the Handle login file
-                    handleLogin();
+                    app.handleLogin();
                     break;
                 case 2:
                     customerFlipfitMenu.registerCustomer(scanner);

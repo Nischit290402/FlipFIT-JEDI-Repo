@@ -41,6 +41,7 @@ public class CustomerFlipfitMenu {
             System.out.println("1. View Profile");
             System.out.println("2. Edit Profile");
             System.out.println("3. View Bookings");
+            System.out.println("4. Cancel Bookings");
             System.out.print("Enter your choice: ");
             userChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
@@ -53,7 +54,10 @@ public class CustomerFlipfitMenu {
                 	customerService.editProfile(user);
                     break;
                 case 3:
-                	customerService.viewBookings();
+                	customerService.viewBookings(user.getUserid());
+                    break;
+                case 4:
+                    customerService.cancelBookings(user.getUserid());
                     break;
                 
                     

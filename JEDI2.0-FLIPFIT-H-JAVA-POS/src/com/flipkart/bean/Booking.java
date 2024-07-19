@@ -1,31 +1,67 @@
 package com.flipkart.bean;
 
-public class Booking {
-    private int bookingID;
-    private int gymID;
-    private int slotID;
+import java.time.LocalDateTime;
 
-    public int getBookingID() {
+public class Booking {
+    private String userID;
+    private String bookingID;
+    private String gymID;
+    private String slotID;
+    private LocalDateTime date;
+
+
+    public Booking(String userID, String bookingID, String gymID, String slotID, LocalDateTime date) {
+        this.userID = userID;
+        this.bookingID = bookingID;
+        this.gymID = gymID;
+        this.slotID = slotID;
+        this.date = date;
+    }
+
+    public Booking(String userID, String bookingID, String gymID, String slotID) {
+        this.userID = userID;
+        this.bookingID = bookingID;
+        this.gymID = gymID;
+        this.slotID = slotID;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getBookingID() {
         return bookingID;
     }
 
-    public void setBookingID(int bookingID) {
+    public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
     }
 
-    public int getGymID() {
+    public String getGymID() {
         return gymID;
     }
 
-    public void setGymID(int gymID) {
+    public void setGymID(String gymID) {
         this.gymID = gymID;
     }
 
-    public int getSlotID() {
+    public String getSlotID() {
         return slotID;
     }
 
-    public void setSlotID(int slotID) {
+    public void setSlotID(String slotID) {
         this.slotID = slotID;
     }
 }

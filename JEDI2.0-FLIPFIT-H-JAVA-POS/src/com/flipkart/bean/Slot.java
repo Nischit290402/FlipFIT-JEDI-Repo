@@ -8,6 +8,13 @@ public class Slot {
     private int capacity;
     private String slotID;
 
+    public Slot( String slotID ,LocalDateTime starttime, LocalDateTime endtime, int capacity) {
+        this.slotID = slotID;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.capacity = capacity;
+    }
+
     public LocalDateTime getStarttime() {
         return starttime;
     }
@@ -39,5 +46,16 @@ public class Slot {
     public void setSlotID(String slotID) {
         this.slotID = slotID;
     }
+
+    public void reduceCapacity() {
+        if (capacity > 0) {
+            capacity--;
+        }
+    }
+
+    public void increaseCapacity() {
+        capacity++;
+    }
+
 
 }
