@@ -2,7 +2,7 @@ package com.flipkart.client;
 
 import com.flipkart.business.AdminService;
 import java.util.Scanner;
-import com.flipkart.bean.GymCentre;
+import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.User;

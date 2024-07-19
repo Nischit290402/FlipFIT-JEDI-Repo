@@ -60,8 +60,6 @@ public class FlipfitApplication {
         Scanner scanner = new Scanner(System.in);
 
         // Prompt the user for email and password
-//        System.out.print("Enter email: ");
-//        String email = scanner.nextLine();
         System.out.println("Enter your username: ");
         String username = scanner.nextLine();
 
@@ -71,8 +69,6 @@ public class FlipfitApplication {
         if (user != null) {
             System.out.println("Logged in successfully.");
             String id = user.getUserid();
-//            char role = user.getID().charAt(0);
-//            role = user.getRoleID()
             Role role = user.getRole();
             switch (role.getRoleID()) {
                 case "A":
