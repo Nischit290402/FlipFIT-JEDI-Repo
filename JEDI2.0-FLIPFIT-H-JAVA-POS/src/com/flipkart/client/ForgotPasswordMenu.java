@@ -11,13 +11,13 @@ public class ForgotPasswordMenu {
         this.forgotPasswordService=new ForgotPasswordService();
     }
 
-    public static void forgotpassword(Scanner scanner) {
+    public void forgotpassword(Scanner scanner) {
         System.out.println("Enter username: ");
         String username=scanner.nextLine();
-        if(ForgotPasswordService.isUser(username)){
+        if(forgotPasswordService.isUser(username)){
             System.out.println("Enter new password: ");
             String newPass=scanner.nextLine();
-            ForgotPasswordService.resetPass(username,newPass);
+            forgotPasswordService.resetPass(username,newPass);
             System.out.println("Password changed successfully.");
         }
         else{

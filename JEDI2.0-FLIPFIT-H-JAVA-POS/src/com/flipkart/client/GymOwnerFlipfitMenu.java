@@ -1,22 +1,22 @@
 package com.flipkart.client;
 
-import com.flipkart.business.GymOwnerServiceInterface;
-import com.flipkart.business.UserServiceInterface;
+import com.flipkart.business.GymOwnerService;
+import com.flipkart.business.UserService;
 import com.flipkart.bean.User;
 import java.util.Scanner;
 
 public class GymOwnerFlipfitMenu {
     private Scanner scanner;
-    private GymOwnerServiceInterface gymOwnerServiceInterface;
-    private UserServiceInterface userServiceInterface;
+    private GymOwnerService gymOwnerServiceInterface;
+    private UserService userServiceInterface;
 
     public GymOwnerFlipfitMenu(Scanner scanner) {
         this.scanner = scanner;
-        this.gymOwnerServiceInterface = new GymOwnerServiceInterface();
-        this.userServiceInterface = new UserServiceInterface();
+        this.gymOwnerServiceInterface = new GymOwnerService();
+        this.userServiceInterface = new UserService();
     }
 
-    public static void registerGymOwner(Scanner scanner) {
+    public void registerGymOwner(Scanner scanner) {
         System.out.println("Enter your Username");
         String username = scanner.nextLine();
         System.out.println("Enter your Password");
@@ -30,10 +30,10 @@ public class GymOwnerFlipfitMenu {
         System.out.println("Enter your Age");
         int age = Integer.parseInt(scanner.nextLine());
 
-        GymOwnerServiceInterface.createGymOwner(username,name, mail, phone, age, password);
+        gymOwnerServiceInterface.createGymOwner(username,name, mail, phone, age, password);
     }
-    public static void showGymOwnerList() {
-        GymOwnerServiceInterface.listGymOwners();
+    public void showGymOwnerList() {
+        gymOwnerServiceInterface.listGymOwners();
     }
 
     public void showMenu(User user){
@@ -51,16 +51,16 @@ public class GymOwnerFlipfitMenu {
 
             switch (gymOwnerChoice) {
                 case 1:
-                    GymOwnerServiceInterface.showGymCenters(user);
+                    gymOwnerServiceInterface.showGymCenters(user);
                     break;
                 case 2:
-                    GymOwnerServiceInterface.addGymCenter(user);
+                    gymOwnerServiceInterface.addGymCenter(user);
                     break;
                 case 3:
-                    GymOwnerServiceInterface.editSlots(user);
+                    gymOwnerServiceInterface.editSlots(user);
                     break;
                 case 4:
-//                    GymOwnerServiceInterface.logout();
+//                    gymOwnerServiceInterface.logout();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
