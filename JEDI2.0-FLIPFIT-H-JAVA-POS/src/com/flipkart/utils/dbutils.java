@@ -15,7 +15,7 @@ public class dbutils {
         else{
             String url = "jdbc:mysql://localhost:3306/flipfit";
             String user = "root";
-            String password = "root@123";
+            String password = ""; // Please add you workbench details to connect locally
             connection = DriverManager.getConnection(url, user, password);
         }
 
