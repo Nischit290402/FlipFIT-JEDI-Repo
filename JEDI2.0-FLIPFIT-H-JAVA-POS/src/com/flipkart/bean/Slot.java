@@ -1,27 +1,26 @@
 package com.flipkart.bean;
 
-public class Slot {
-    private int starttime;
-    private int endtime;
-    private int capacity;
-    private int slotID;
-    private int date;
-    private int month;
-    private int year;
+import java.time.LocalDateTime;
 
-    public int getStarttime() {
+public class Slot {
+    private LocalDateTime starttime;
+    private LocalDateTime endtime;
+    private int capacity;
+    private String slotID;
+
+    public LocalDateTime getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(int starttime) {
+    public void setStarttime(LocalDateTime starttime) {
         this.starttime = starttime;
     }
 
-    public int getEndtime() {
+    public LocalDateTime getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(int endtime) {
+    public void setEndtime(LocalDateTime endtime) {
         this.endtime = endtime;
     }
 
@@ -33,35 +32,12 @@ public class Slot {
         this.capacity = capacity;
     }
 
-    public int getSlotID() {
+    public String getSlotID() {
         return slotID;
     }
 
-    public void setSlotID(int slotID) {
+    public void setSlotID(String slotID) {
         this.slotID = slotID;
     }
 
-    public int getDate() {
-        return date;
-    }
-
-    public void setDate(int date) {
-        this.date = date;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
 }

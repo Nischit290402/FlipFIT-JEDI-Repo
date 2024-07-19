@@ -1,21 +1,22 @@
 package com.flipkart.client;
 
-import com.flipkart.business.CustomerServiceInterface;
+import com.flipkart.business.CustomerService;
 import com.flipkart.bean.User;
-import com.flipkart.business.UserServiceInterface;
+import com.flipkart.business.UserService;
 
 import java.util.Scanner;
-import com.flipkart.bean.User;
 
 public class CustomerFlipfitMenu {
     private Scanner scanner = new Scanner(System.in);
-    private UserServiceInterface userServiceInterface;
+    private UserService userServiceInterface;
+
     public CustomerFlipfitMenu(Scanner scanner) {
         this.scanner = scanner;
-        this.userServiceInterface = new UserServiceInterface();
+        this.userServiceInterface = new UserService();
     }
+    CustomerService customerService = new CustomerService();
 
-    public static void registerCustomer(Scanner scanner){
+    public void registerCustomer(Scanner scanner){
         System.out.println("Enter your Username");
         String username = scanner.nextLine();
         System.out.println("Enter your Password");
@@ -29,7 +30,7 @@ public class CustomerFlipfitMenu {
         System.out.println("Enter your Age");
         int age = Integer.parseInt(scanner.nextLine());
 
-        CustomerServiceInterface.createCustomer(username, name, mail, phone, age, password);
+        customerService.createCustomer(username, name, mail, phone, age, password);
     }
 
     public void showMenu(User user) {
@@ -43,16 +44,16 @@ public class CustomerFlipfitMenu {
             System.out.print("Enter your choice: ");
             userChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
-
+            CustomerService customerService = new CustomerService();
             switch (userChoice) {
                 case 1:
-                    CustomerServiceInterface.showProfile(user.getUserid());
+                    customerService.showProfile(user.getUserid());
                     break;
                 case 2:
-                	CustomerServiceInterface.editProfile(user);
+                	customerService.editProfile(user);
                     break;
                 case 3:
-                	CustomerServiceInterface.viewBookings();
+                	customerService.viewBookings();
                     break;
                 
                     
