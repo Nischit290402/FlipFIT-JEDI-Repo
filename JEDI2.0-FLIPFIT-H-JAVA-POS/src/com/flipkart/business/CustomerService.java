@@ -9,11 +9,16 @@ import com.flipkart.bean.User;
 import java.util.HashMap;
 
 import com.flipkart.business.UserService;
+import com.flipkart.dao.CustomerDAO;
+import com.flipkart.dao.CustomerDAOImpl;
 
 public class CustomerService implements CustomerServiceInterface{
 	private int cnt = 1;
 	public HashMap<String, Customer> customers = new HashMap<String, Customer>();
 	UserService userService=new UserService();
+	CustomerDAOImpl customerDAO=new CustomerDAOImpl() ;
+	Scanner scanner = new Scanner(System.in);
+
 	public void createCustomer(String username, String name, String email, String phone, int age,
                                       String password) {
 		String id = "0" + cnt++;
@@ -38,16 +43,24 @@ public class CustomerService implements CustomerServiceInterface{
 		}
 	}
 
-	public void viewBookings() {
-
+	public void viewBookings(String customerId) {
+		customerDAO.fetchBookedSlots(customerId);
 	}
 
-//    public static void editProfile() {
-//    	
-//    }
-	public void editProfile(User user) {
+	public void cancelBookings(String userId) {
+		customerDAO.fetchBookedSlots(userId);
+		System.out.println("Enter Gym ID to cancel:");
+		String gymId = scanner.nextLine();
 
-		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter Slot ID to cancel:");
+		String slotId = scanner.nextLine();
+
+		System.out.println("Enter Date (yyyy-mm-dd) to cancel:");
+		String date = scanner.nextLine();
+
+		customerDAO.cancelBooking(gymId, slotId, userId ,date);
+	}
+	public void editProfile(User user) {
 
 		Customer customer = customers.get(user.getUserid());
 
