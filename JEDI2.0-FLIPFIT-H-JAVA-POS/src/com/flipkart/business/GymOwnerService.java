@@ -16,13 +16,14 @@ import com.flipkart.business.UserService;
 public class GymOwnerService implements  GymOwnerServiceInterface{
     private static int cnt = 1;
     UserService userService = new UserService();
+    public static HashMap<String, GymOwner> PendingGymOwnerMap = new HashMap<>();
     public static HashMap<String, GymOwner> GymOwnerMap  = new HashMap<String,GymOwner>();
     public void createGymOwner(String username, String name, String mail, String phone, int age, String password) {
         System.out.println("Registering Gym Owner");
         String id = "0" + cnt++;
         Role role=new Role("B", "GymOwner");
         GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password, id, role);
-        GymOwnerMap.put(mail, gymOwner);
+        PendingGymOwnerMap.put(id, gymOwner);
         User user = new User(username, password, id, role);
         addUser(user);
 
