@@ -3,16 +3,19 @@ package com.flipkart.client;
 
 import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
-import com.flipkart.business.UserServiceInterface;
+import com.flipkart.business.UserService;
 
 
 import java.util.Scanner;
 
 public class FlipfitApplication {
-    public static AdminFlipfitMenu adminFlipfitMenu;
-    public static void main(String[] args) {
+    AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
+    public void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        adminFlipfitMenu = new AdminFlipfitMenu(scanner);
+        adminFlipfitMenu = new AdminFlipfitMenu();
+        CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
+        ForgotPasswordMenu forgotPasswordMenu = new ForgotPasswordMenu(scanner);
+        GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
 
         System.out.println("Welcome to Flipfit");
 //        AdminFlipfitMenu adminMenu = new AdminFlipfitMenu(scanner);
@@ -36,16 +39,16 @@ public class FlipfitApplication {
                     handleLogin();
                     break;
                 case 2:
-                    CustomerFlipfitMenu.registerCustomer(scanner);
+                    customerFlipfitMenu.registerCustomer(scanner);
                     System.out.println("Customer Registered");
                     break;
                  case 3:
-                    GymOwnerFlipfitMenu.registerGymOwner(scanner);
+                     gymOwnerFlipfitMenu.registerGymOwner(scanner);
                     System.out.println("Gym Owner Registered");
                     break;
                 case 4:
                     // Call the change password method
-                    ForgotPasswordMenu.forgotpassword(scanner);
+                    forgotPasswordMenu.forgotpassword(scanner);
                     break;
                 case 5:
                     System.out.println("Exiting the application.");
@@ -56,7 +59,7 @@ public class FlipfitApplication {
         }
     }
 
-    public static void handleLogin(){
+    public void handleLogin(){
         Scanner scanner = new Scanner(System.in);
 
         // Prompt the user for email and password
@@ -64,10 +67,10 @@ public class FlipfitApplication {
 //        String email = scanner.nextLine();
         System.out.println("Enter your username: ");
         String username = scanner.nextLine();
-
+        UserService userService=new UserService();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
-        User user = UserServiceInterface.Login(username, password);
+        User user = userService.Login(username, password);
         if (user != null) {
             System.out.println("Logged in successfully.");
             String id = user.getUserid();

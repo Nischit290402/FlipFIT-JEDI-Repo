@@ -2,22 +2,18 @@ package com.flipkart.client;
 
 import com.flipkart.business.AdminService;
 import java.util.Scanner;
-import com.flipkart.bean.GymCentre;
-import com.flipkart.bean.GymOwner;
-import com.flipkart.bean.Admin;
+
 import com.flipkart.bean.User;
 import com.flipkart.business.AdminServiceInterface;
-import com.flipkart.business.UserServiceInterface;
-
-import com.flipkart.bean.User;
+import com.flipkart.business.UserService;
 
 public class AdminFlipfitMenu {
-    private final Scanner scanner;
+    private Scanner scanner;
     // private AdminService adminServiceInterface;
     private final AdminServiceInterface adminServiceInterface;
-    private UserServiceInterface userServiceInterface;
+    private UserService userServiceInterface;
 
-    public AdminFlipfitMenu(Scanner scanner) {
+    public AdminFlipfitMenu() {
         this.scanner = scanner;
         this.adminServiceInterface = new AdminService();
     }
