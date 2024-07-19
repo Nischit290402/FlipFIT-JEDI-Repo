@@ -6,7 +6,7 @@ import com.flipkart.bean.User;
 import java.util.HashMap;
 
 public class UserService implements UserServiceInterface{
-    public static HashMap<String, User> UsersMap  = new HashMap<String,User>();
+    public static HashMap<String, User> UsersMap  = new HashMap<>();
     public void addUser(User user) {
         UsersMap.put(user.getUsername(), user);
     }
@@ -23,12 +23,7 @@ public class UserService implements UserServiceInterface{
     public boolean validatePassword(User user, String oldPassword){
         String valPassword = user.getPassword();
 
-        if(oldPassword.equals(valPassword)) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return oldPassword.equals(valPassword);
     }
 
     public void confirmPassword(User user,String newPassword, String confirmPassword){

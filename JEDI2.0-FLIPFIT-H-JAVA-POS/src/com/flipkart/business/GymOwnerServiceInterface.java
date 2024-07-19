@@ -7,7 +7,4 @@ public interface GymOwnerServiceInterface {
     public void addGymCenter(User user);
     public void showGymCenters(User user);
     public void editSlots(User user);
-    public boolean updateGymOwner(int gymOwnerId);
-    public boolean deleteGymOwner(int gymOwnerId);
-    public void listGymOwners();
 }

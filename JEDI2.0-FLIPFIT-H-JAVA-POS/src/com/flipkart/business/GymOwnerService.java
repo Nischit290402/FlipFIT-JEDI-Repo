@@ -25,13 +25,13 @@ public class GymOwnerService implements  GymOwnerServiceInterface{
         GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password, id, role);
         PendingGymOwnerMap.put(id, gymOwner);
         User user = new User(username, password, id, role);
-        addUser(user);
+        userService.addUser(user);
 
         System.out.println("Gym Owner registered successfully");
     }
 
-    private void addUser(User user) {
-    }
+//    private void addUser(User user) {
+//    }
 
     public void addGymCenter(User user) {
 //        String gymID, String gymName, String address, String city
@@ -64,26 +64,5 @@ public class GymOwnerService implements  GymOwnerServiceInterface{
     public void editSlots(User user){
         System.out.println("Enter Gym Centre Name: ");
     }
-    public boolean updateGymOwner(int gymOwnerId) {
-        System.out.println("Updating Gym Owner --> " + gymOwnerId);
-        return true;
-    }
-
-    public boolean deleteGymOwner(int gymOwnerId) {
-        System.out.println("Deleting Gym Owner --> " + gymOwnerId);
-        return true;
-    }
-
-    public void listGymOwners() {
-        System.out.println("Listing Gym Owners");
-//       list gym owners
-        Iterator<GymOwner> gymOwnerIterator = GymOwnerMap.values().iterator();
-        while (gymOwnerIterator.hasNext()) {
-            GymOwner gymOwner = gymOwnerIterator.next();
-            System.out.println(gymOwner);
-        };
-    }
-
-
 }
 

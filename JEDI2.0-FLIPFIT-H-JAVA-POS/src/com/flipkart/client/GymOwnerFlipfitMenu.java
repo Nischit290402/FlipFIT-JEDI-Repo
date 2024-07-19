@@ -32,9 +32,9 @@ public class GymOwnerFlipfitMenu {
 
         gymOwnerServiceInterface.createGymOwner(username,name, mail, phone, age, password);
     }
-    public void showGymOwnerList() {
-        gymOwnerServiceInterface.listGymOwners();
-    }
+//    public void showGymOwnerList() {
+//        gymOwnerServiceInterface.listGymOwners();
+//    }
 
     public void showMenu(User user){
         int gymOwnerChoice = -1;
