@@ -1,11 +1,15 @@
 package com.flipkart.bean;
 
+import java.util.*;
 public class GymCenter {
     private String gymID;
     private String gymName;
     private String address;
     private String city;
-
+    
+    private Map<String, GymCenter> gymCentres = new HashMap<>(); 
+    private Map<String, GymCenter> pendingCentres = new HashMap<>();
+    public GymCenter() {}
     public GymCenter(String gymID, String gymName, String address, String city) {}
     public String getGymID() {
         return gymID;
@@ -37,5 +41,12 @@ public class GymCenter {
 
     public void setCity(String city) {
         this.city = city;
+    }
+    public Map<String, GymCenter> getApprovedGyms() {
+        return gymCentres;
+    }
+
+    public Map<String, GymCenter> getPendingGyms() {
+        return pendingCentres;
     }
 }
