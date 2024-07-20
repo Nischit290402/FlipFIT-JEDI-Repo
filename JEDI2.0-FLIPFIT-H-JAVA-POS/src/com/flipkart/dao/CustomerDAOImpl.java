@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomerDAOImpl {
+public class CustomerDAOImpl implements CustomerDAO {
     private static Map<String, List<Slot>> gymSlots = new HashMap<>();
     private static List<Booking> bookings = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class CustomerDAOImpl {
         System.out.println("Booking canceled successfully!");
     }
 
-    public static void addBooking(Booking booking) {
+    public void addBooking(Booking booking) {
         bookings.add(booking);
     }
 }
