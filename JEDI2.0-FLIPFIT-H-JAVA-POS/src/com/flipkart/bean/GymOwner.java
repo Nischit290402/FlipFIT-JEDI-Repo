@@ -59,4 +59,13 @@ public class GymOwner extends User {
     public void setGymCenters(List<GymCenter> gymCenters) {
         this.gymCenters = gymCenters;
     }
+
+    public GymCenter searchGC(String name, String city){
+        for(GymCenter i:gymCenters){
+            if(i.getGymName()==name && i.getCity()==city){
+                return i;
+            }
+        }
+        return null;
+    }
 }
