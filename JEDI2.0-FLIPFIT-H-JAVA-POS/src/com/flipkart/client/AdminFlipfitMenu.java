@@ -16,7 +16,7 @@ public class AdminFlipfitMenu {
     private UserService userServiceInterface;
 
     public AdminFlipfitMenu() {
-        this.scanner = scanner;
+        this.scanner = new Scanner(System.in);
         this.adminServiceInterface = new AdminService();
     }
 
