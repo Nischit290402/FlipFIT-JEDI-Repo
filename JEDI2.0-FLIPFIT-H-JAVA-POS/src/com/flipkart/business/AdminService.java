@@ -1,29 +1,40 @@
 package com.flipkart.business;
+import java.util.*;
 
 import java.util.HashMap;
-import com.flipkart.bean.Admin;
-import com.flipkart.bean.GymOwner;
-import com.flipkart.bean.Role;
-import com.flipkart.bean.User;
 import com.flipkart.business.GymOwnerService;
 import com.flipkart.business.UserService;
+import com.flipkart.business.GymOwnerServiceInterface;
 
+import static com.flipkart.business.UserServiceInterface.addUser;
+ 
 public class AdminService implements AdminServiceInterface {
     public AdminService(){
         initializeAdmin();
     }
-    UserService userService = new UserService();
+
     private void initializeAdmin() {
         Admin admin = new Admin("bean", "BeanAdmin", "bean@gmail.com", "1234567890", 0, "bean@1234", "A_0", new Role("A","ADMIN"));
         User user = new User(admin.getUsername(), admin.getPassword(), admin.getUserid(), admin.getRole());
-        userService.addUser(user);
+        addUser(user);
     }
 
     @Override
-    public void approveGymCenterById(String gymID) {
-        System.out.println("Approving gym center " + gymID);
+    public void approveGymCenterById(String gymID) { 
+    	GymCenter gymCenter = null;  //
+        GymCenter pendingGym = gymCenter.getPendingGyms().get(gymID);
+        
+        if (pendingGym != null) {
+                gymCenter.getPendingGyms().remove(gymID);
+//
+//            // Add to approved gyms
+            gymCenter.getApprovedGyms().put(gymID,pendingGym);
+            
+            System.out.println("Gym center approved: " + pendingGym.getGymName());
+        } else {
+            System.out.println("GymId is not exist");
+        }
     }
-
     @Override
     public void approveGymOwnerById(String ID) {
         System.out.println("Approving gym owner " + ID);
@@ -34,8 +45,14 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void approveAllGymCenters() {
-        System.out.println("Approving all gym centers");
+    public void approveAllGymCenters() {   //done  
+    	GymCenter gymCenter = null;  //
+        Map<String, GymCenter>AllPendingList = gymCenter.getPendingGyms();
+    	for (String key: AllPendingList.keySet()) {
+    		gymCenter.getApprovedGyms().put(key,AllPendingList.get(key)); 
+    	} 
+    	gymCenter.getPendingGyms().clear(); 
+    	System.out.println("Approved all gym Centres");
     }
 
     @Override
@@ -51,9 +68,19 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void listPendingGymCenters() {
-        System.out.println("Listing all pending gym centers");
-    }
+    public void listPendingGymCenters() {  // view 
+    	System.out.println("Listing all pending gym centers"); 
+    	GymCenter gymCenter = null;  //
+        Map<String, GymCenter>AllPendingList = gymCenter.getPendingGyms();
+        for (Map.Entry<String, GymCenter> entry :AllPendingList.entrySet()) {
+            GymCenter gym = entry.getValue();
+            System.out.println("Gym ID: " + gym.getGymID());
+            System.out.println("Gym Name: " + gym.getGymName());
+            System.out.println("Address: " + gym.getAddress());
+            System.out.println("City: " + gym.getCity());
+            System.out.println();
+        }
+    } 
 
     @Override
     public void listPendingGymOwners() {
@@ -61,8 +88,19 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void listGymCenters() {
-        System.out.println("Listing all gym centers");
+    public void listGymCenters() {    // view 
+        System.out.println("Listing all gym centers"); 
+    	GymCenter gymCenter = null;  //
+        Map<String, GymCenter>AllPendingList = gymCenter.getApprovedGyms();
+        for (Map.Entry<String, GymCenter> entry :AllPendingList.entrySet()) {
+            GymCenter gym = entry.getValue();
+            System.out.println("Gym ID: " + gym.getGymID());
+            System.out.println("Gym Name: " + gym.getGymName());
+            System.out.println("Address: " + gym.getAddress());
+            System.out.println("City: " + gym.getCity());
+            System.out.println();
+        }
+
     }
 
     @Override

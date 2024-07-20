@@ -1,5 +1,8 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.GymCenter;
+import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 
 public interface GymOwnerServiceInterface {
@@ -8,3 +11,4 @@ public interface GymOwnerServiceInterface {
     public void showGymCenters(User user);
     public void editSlots(User user);
 }
+
