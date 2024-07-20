@@ -17,53 +17,77 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void approveGymCenterById(String gymID) { 
-        GymCenter pendingGym = pendingCenters.get(gymID);
-        
-        if (pendingGym != null) {
-            pendingCenters.remove(gymID);
-            gymCenters.put(gymID,pendingGym);
-            
-            System.out.println("Gym center approved: " + pendingGym.getGymName());
-        } else {
-            System.out.println("GymId is not exist");
+    public void approveGymCenterById(String gymID) {
+        try{
+            GymCenter pendingGym = pendingCenters.get(gymID);
+
+            if (pendingGym != null) {
+                pendingCenters.remove(gymID);
+                gymCenters.put(gymID,pendingGym);
+
+                System.out.println("Gym center approved: " + pendingGym.getGymName());
+            } else {
+                System.out.println("GymId is not exist");
+            }
+        } catch(Exception e){
+            System.out.println("Error approving gym center: "+ e.getMessage());
         }
+
     }
     @Override
     public void approveGymOwnerById(String ID) {
-        System.out.println("Approving gym owner " + ID);
-        GymOwner tempGymOwner = GymOwnerService.PendingGymOwnerMap.get(ID);
-        GymOwnerService.GymOwnerMap.put(ID, tempGymOwner);
-        GymOwnerService.PendingGymOwnerMap.remove(ID);
-        System.out.println("Approved gym owner " + tempGymOwner);
+        try{
+            System.out.println("Approving gym owner " + ID);
+            GymOwner tempGymOwner = GymOwnerService.PendingGymOwnerMap.get(ID);
+            GymOwnerService.GymOwnerMap.put(ID, tempGymOwner);
+            GymOwnerService.PendingGymOwnerMap.remove(ID);
+            System.out.println("Approved gym owner " + tempGymOwner);
+        }catch(Exception e){
+            System.out.println("Error approving gym owner: "+e.getMessage());
+        }
     }
 
     @Override
     public void approveAllGymCenters() {   //done
-    	for (String key: pendingCenters.keySet()) {
-    		gymCenters.put(key,pendingCenters.get(key));
-    	} 
-    	pendingCenters.clear();
-    	System.out.println("Approved all gym Centres");
+        try{
+
+            for (String key: pendingCenters.keySet()) {
+                gymCenters.put(key,pendingCenters.get(key));
+            }
+            pendingCenters.clear();
+            System.out.println("Approved all gym Centres");
+        }catch(Exception e){
+            System.out.println("Error approving all gym centers: "+e.getMessage());
+        }
     }
 
     @Override
     public void approveAllGymOwners() {
-        System.out.println("Approving all gym owners");
-        for (String id : GymOwnerService.PendingGymOwnerMap.keySet()) {
-            GymOwner gymOwner = GymOwnerService.PendingGymOwnerMap.get(id);
-            System.out.println(id + ": " + gymOwner + " approved");
-            GymOwnerService.GymOwnerMap.put(id, gymOwner);
-            GymOwnerService.PendingGymOwnerMap.remove(id);
+        try{
+
+            System.out.println("Approving all gym owners");
+            for (String id : GymOwnerService.PendingGymOwnerMap.keySet()) {
+                GymOwner gymOwner = GymOwnerService.PendingGymOwnerMap.get(id);
+                System.out.println(id + ": " + gymOwner + " approved");
+                GymOwnerService.GymOwnerMap.put(id, gymOwner);
+                GymOwnerService.PendingGymOwnerMap.remove(id);
+            }
+            System.out.println("All gym owners approved");
+        }catch(Exception e){
+            System.out.println("Error approving all gym owners: "+e.getMessage());
         }
-        System.out.println("All gym owners approved");
     }
 
     @Override
-    public void listPendingGymCenters() {  // view 
-    	System.out.println("Listing all pending gym centers");
-        for (Map.Entry<String, GymCenter> entry :pendingCenters.entrySet()) {
-            listGymCenterDetails(entry);
+    public void listPendingGymCenters() {  // view
+        try{
+
+            System.out.println("Listing all pending gym centers");
+            for (Map.Entry<String, GymCenter> entry :pendingCenters.entrySet()) {
+                listGymCenterDetails(entry);
+            }
+        }catch(Exception e){
+            System.out.println("Error listing pending gym centers: "+e.getMessage());
         }
     }
 
@@ -78,26 +102,41 @@ public class AdminService implements AdminServiceInterface {
 
     @Override
     public void listPendingGymOwners() {
-        System.out.println("Listing all pending gym owners");
-        GymOwnerService.PendingGymOwnerMap.forEach((id, gymOwner) -> {
-            System.out.println(id + ": " + gymOwner);
-        });
+        try{
+
+            System.out.println("Listing all pending gym owners");
+            GymOwnerService.PendingGymOwnerMap.forEach((id, gymOwner) -> {
+                System.out.println(id + ": " + gymOwner);
+            });
+        }catch (Exception e){
+            System.out.println("Error listing pending gym owners: "+e.getMessage());
+        }
     }
 
     @Override
-    public void listGymCenters() {    // view 
-        System.out.println("Listing all gym centers");
-        for (Map.Entry<String, GymCenter> entry :gymCenters.entrySet()) {
-            listGymCenterDetails(entry);
+    public void listGymCenters() {    // view
+        try{
+
+            System.out.println("Listing all gym centers");
+            for (Map.Entry<String, GymCenter> entry :gymCenters.entrySet()) {
+                listGymCenterDetails(entry);
+            }
+        }catch(Exception e){
+            System.out.println("Error listing gym centers: "+e.getMessage());
         }
     }
 
     @Override
     public void listGymOwners() {
-        System.out.println("Listing all gym owners");
-        GymOwnerService.GymOwnerMap.forEach((id, gymOwner) -> {
-            System.out.println(id + ": " + gymOwner);
-        });
+        try{
+
+            System.out.println("Listing all gym owners");
+            GymOwnerService.GymOwnerMap.forEach((id, gymOwner) -> {
+                System.out.println(id + ": " + gymOwner);
+            });
+        }catch(Exception e){
+            System.out.println("Error listing gym owners: "+e.getMessage());
+        }
     }
 
     @Override
