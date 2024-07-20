@@ -36,7 +36,7 @@ public class GymOwnerService implements  GymOwnerServiceInterface{
     public void addGymCenter(User user) {
 //        String gymID, String gymName, String address, String city
 //        String id = user.getUserid();
-        GymOwner tempGymOwner = GymOwnerMap.get(user.getUserid());
+        GymOwner GymOwner = GymOwnerMap.get(user.getUserid());
         System.out.println("Registering Gym Center");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Gym Centre Name: ");
@@ -45,10 +45,10 @@ public class GymOwnerService implements  GymOwnerServiceInterface{
         String address = scanner.nextLine();
         System.out.println("Enter Gym Centre City: ");
         String city = scanner.nextLine();
-        String id = "GC" + tempGymOwner.gymCenters.size()+1;
+        String id = "GC" + GymOwner.gymCenters.size()+1;
         GymCenter gymCenter = new GymCenter(id, gymName, address, city);
-        tempGymOwner.gymCenters.add(gymCenter);
-        GymOwnerMap.put(user.getUserid(), tempGymOwner);
+        AdminService.pendingCenters.put(id, gymCenter);
+        GymOwnerMap.put(user.getUserid(), GymOwner);
         System.out.println("Gym Center added successfully");
     }
 

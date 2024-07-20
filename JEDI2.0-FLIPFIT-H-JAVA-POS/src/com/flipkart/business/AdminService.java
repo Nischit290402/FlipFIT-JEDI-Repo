@@ -1,34 +1,28 @@
 package com.flipkart.business;
 import java.util.*;
 
-import java.util.HashMap;
-import com.flipkart.business.GymOwnerService;
-import com.flipkart.business.UserService;
-import com.flipkart.business.GymOwnerServiceInterface;
-
-import static com.flipkart.business.UserServiceInterface.addUser;
+import com.flipkart.bean.*;
  
 public class AdminService implements AdminServiceInterface {
     public AdminService(){
         initializeAdmin();
     }
-
+    UserService userService = new UserService();
+    public static Map<String, GymCenter> gymCenters = new HashMap<>();
+    public static Map<String, GymCenter> pendingCenters = new HashMap<>();
     private void initializeAdmin() {
         Admin admin = new Admin("bean", "BeanAdmin", "bean@gmail.com", "1234567890", 0, "bean@1234", "A_0", new Role("A","ADMIN"));
         User user = new User(admin.getUsername(), admin.getPassword(), admin.getUserid(), admin.getRole());
-        addUser(user);
+        userService.addUser(user);
     }
 
     @Override
     public void approveGymCenterById(String gymID) { 
-    	GymCenter gymCenter = null;  //
-        GymCenter pendingGym = gymCenter.getPendingGyms().get(gymID);
+        GymCenter pendingGym = pendingCenters.get(gymID);
         
         if (pendingGym != null) {
-                gymCenter.getPendingGyms().remove(gymID);
-//
-//            // Add to approved gyms
-            gymCenter.getApprovedGyms().put(gymID,pendingGym);
+            pendingCenters.remove(gymID);
+            gymCenters.put(gymID,pendingGym);
             
             System.out.println("Gym center approved: " + pendingGym.getGymName());
         } else {
@@ -45,13 +39,11 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public void approveAllGymCenters() {   //done  
-    	GymCenter gymCenter = null;  //
-        Map<String, GymCenter>AllPendingList = gymCenter.getPendingGyms();
-    	for (String key: AllPendingList.keySet()) {
-    		gymCenter.getApprovedGyms().put(key,AllPendingList.get(key)); 
+    public void approveAllGymCenters() {   //done
+    	for (String key: pendingCenters.keySet()) {
+    		gymCenters.put(key,pendingCenters.get(key));
     	} 
-    	gymCenter.getPendingGyms().clear(); 
+    	pendingCenters.clear();
     	System.out.println("Approved all gym Centres");
     }
 
@@ -69,38 +61,35 @@ public class AdminService implements AdminServiceInterface {
 
     @Override
     public void listPendingGymCenters() {  // view 
-    	System.out.println("Listing all pending gym centers"); 
-    	GymCenter gymCenter = null;  //
-        Map<String, GymCenter>AllPendingList = gymCenter.getPendingGyms();
-        for (Map.Entry<String, GymCenter> entry :AllPendingList.entrySet()) {
-            GymCenter gym = entry.getValue();
-            System.out.println("Gym ID: " + gym.getGymID());
-            System.out.println("Gym Name: " + gym.getGymName());
-            System.out.println("Address: " + gym.getAddress());
-            System.out.println("City: " + gym.getCity());
-            System.out.println();
+    	System.out.println("Listing all pending gym centers");
+        for (Map.Entry<String, GymCenter> entry :pendingCenters.entrySet()) {
+            listGymCenterDetails(entry);
         }
-    } 
+    }
+
+    private void listGymCenterDetails(Map.Entry<String, GymCenter> entry) {
+        GymCenter gym = entry.getValue();
+        System.out.println("Gym ID: " + gym.getGymID());
+        System.out.println("Gym Name: " + gym.getGymName());
+        System.out.println("Address: " + gym.getAddress());
+        System.out.println("City: " + gym.getCity());
+        System.out.println();
+    }
 
     @Override
     public void listPendingGymOwners() {
         System.out.println("Listing all pending gym owners");
+        GymOwnerService.PendingGymOwnerMap.forEach((id, gymOwner) -> {
+            System.out.println(id + ": " + gymOwner);
+        });
     }
 
     @Override
     public void listGymCenters() {    // view 
-        System.out.println("Listing all gym centers"); 
-    	GymCenter gymCenter = null;  //
-        Map<String, GymCenter>AllPendingList = gymCenter.getApprovedGyms();
-        for (Map.Entry<String, GymCenter> entry :AllPendingList.entrySet()) {
-            GymCenter gym = entry.getValue();
-            System.out.println("Gym ID: " + gym.getGymID());
-            System.out.println("Gym Name: " + gym.getGymName());
-            System.out.println("Address: " + gym.getAddress());
-            System.out.println("City: " + gym.getCity());
-            System.out.println();
+        System.out.println("Listing all gym centers");
+        for (Map.Entry<String, GymCenter> entry :gymCenters.entrySet()) {
+            listGymCenterDetails(entry);
         }
-
     }
 
     @Override
