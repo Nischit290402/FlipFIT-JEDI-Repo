@@ -1,18 +1,39 @@
 package com.flipkart.bean;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Slot {
     private LocalDateTime starttime;
     private LocalDateTime endtime;
     private int capacity;
     private String slotID;
-
-    public Slot( String slotID ,LocalDateTime starttime, LocalDateTime endtime, int capacity) {
+    private List<Booking> bookings;
+    private List<Booking> waitings;
+    public Slot( String slotID, LocalDateTime starttime, LocalDateTime endtime, int capacity, List<Booking> bookings, List<Booking> waitings) {
         this.slotID = slotID;
         this.starttime = starttime;
         this.endtime = endtime;
         this.capacity = capacity;
+        this.bookings=new ArrayList<Booking>();
+        this.waitings=new ArrayList<Booking>();
+    }
+
+    public List<Booking> getWaitings() {
+        return waitings;
+    }
+
+    public void setWaitings(List<Booking> waitings) {
+        this.waitings = waitings;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public LocalDateTime getStarttime() {
