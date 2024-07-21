@@ -1,27 +1,29 @@
 package com.flipkart.business;
 
-import com.flipkart.bean.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.flipkart.bean.Customer;
 import java.util.Scanner;
 
+import com.flipkart.bean.Role;
+import com.flipkart.bean.User;
+
 import java.util.HashMap;
+
+import com.flipkart.business.UserService;
+import com.flipkart.dao.CustomerDAO;
+import com.flipkart.dao.CustomerDAOImpl;
 
 public class CustomerService implements CustomerServiceInterface{
 	private int cnt = 1;
 	public HashMap<String, Customer> customers = new HashMap<String, Customer>();
 	UserService userService=new UserService();
-	GymOwnerService gymOwnerService=new GymOwnerService();
+	CustomerDAOImpl customerDAO=new CustomerDAOImpl() ;
 	Scanner scanner = new Scanner(System.in);
 
 	public void createCustomer(String username, String name, String email, String phone, int age,
                                       String password) {
 		String id = "0" + cnt++;
 		Role role = new Role("C", "Customer");
-		List<Booking> bookings = new ArrayList<Booking>();
-		Customer customer = new Customer(username, name, email, phone, age, id, password, role, bookings);
+		Customer customer = new Customer(username, name, email, phone, age, id, password, role);
 		customers.put(id, customer);
 		User user = new User(username, password, id, role);
 		userService.addUser(user);
@@ -41,72 +43,22 @@ public class CustomerService implements CustomerServiceInterface{
 		}
 	}
 
-	public void viewbookings(String userid) {
-		List<pair<Booking, Boolean>> bl=customers.get(userid).getBookings();
-		int c=1;
-		for(pair<Booking, Boolean> bll:bl){
-			System.out.println(c+". Gym Name: "+bll.getFirst().getGymCenter().getGymName()+", Slot Time: "+bll.getFirst().getStarttime()+", Booking Status: "+bll.getSecond()+".");
-			c++;
-		}
+	public void viewBookings(String customerId) {
+		customerDAO.fetchBookedSlots(customerId);
 	}
 
-	public void addbookings(String userId) {
-		System.out.println("Enter City: ");
-		String city=scanner.nextLine();
-		int c=1;
-		List<GymCenter> gc=gymOwnerService.getCityGymcenters().get(city);
-		for(GymCenter gcc :gc){
-			System.out.println(c + ". " + gcc.getGymName());
-			c++;
-		}
-		System.out.println("Enter Gym Name: ");
-		String gn=scanner.nextLine();
-		if(gymOwnerService.searchcitygc(gn, city)!=null){
-			System.out.println("Enter year(yyyy): ");
-			int year=scanner.nextInt();
-			System.out.println("Enter month(mm): ");
-			int month=scanner.nextInt();
-			System.out.println("Enter date(dd): ");
-			int date=scanner.nextInt();
-			System.out.println("Enter hour according to 24hrs clock: ");
-			int hr=scanner.nextInt();
-			LocalDateTime st=LocalDateTime.of(year, month, date, hr, 0, 0);
-			BookingService bookingService=new BookingService();
-			bookingService.bookSlot(userId, gymOwnerService.searchcitygc(gn, city), st);
-		}
-		else{
-			System.out.println("Invalid Gym Name.");
-		}
-	}
+	public void cancelBookings(String userId) {
+		customerDAO.fetchBookedSlots(userId);
+		System.out.println("Enter Gym ID to cancel:");
+		String gymId = scanner.nextLine();
 
-	public void cancelbookings(String userId) {
-		System.out.println("Enter City: ");
-		String city=scanner.nextLine();
-		int c=1;
-		List<GymCenter> gc=gymOwnerService.getCityGymcenters().get(city);
-		for(GymCenter gcc :gc){
-			System.out.println(c + ". " + gcc.getGymName());
-			c++;
-		}
-		System.out.println("Enter Gym Name: ");
-		String gn=scanner.nextLine();
-		if(gymOwnerService.searchcitygc(gn, city)!=null){
-			System.out.println("Enter year(yyyy): ");
-			int year=scanner.nextInt();
-			System.out.println("Enter month(mm): ");
-			int month=scanner.nextInt();
-			System.out.println("Enter date(dd): ");
-			int date=scanner.nextInt();
-			System.out.println("Enter hour according to 24hrs clock: ");
-			int hr=scanner.nextInt();
-			LocalDateTime st=LocalDateTime.of(year, month, date, hr, 0, 0);
-			BookingService bookingService=new BookingService();
-			bookingService.cancelslotbooking(userId, gymOwnerService.searchcitygc(gn, city), st);
-			System.out.println("Booking cancelled successfully.");
-		}
-		else{
-			System.out.println("Invalid Gym Name.");
-		}
+		System.out.println("Enter Slot ID to cancel:");
+		String slotId = scanner.nextLine();
+
+		System.out.println("Enter Date (yyyy-mm-dd) to cancel:");
+		String date = scanner.nextLine();
+
+		customerDAO.cancelBooking(gymId, slotId, userId ,date);
 	}
 	public void editProfile(User user) {
 

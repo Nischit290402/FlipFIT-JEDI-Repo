@@ -1,29 +1,16 @@
 package com.flipkart.bean;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Customer extends User {
     private String name;
     private String email;
     private String phone;
     private int age;
-    private List<pair<Booking, Boolean>> bookings;
-    public Customer(String username, String Name, String Email, String contactNo, int age, String password, String ID, Role role, List<Booking> bookings) {
+
+    public Customer(String username, String Name, String Email, String contactNo, int age, String password, String ID, Role role) {
         super(username, password, ID, role);
         this.name = Name;
         this.email = Email;
         this.phone = contactNo;
         this.age = age;
-        this.bookings= new ArrayList<pair<Booking, Boolean>>();
-    }
-
-    public List<pair<Booking, Boolean>> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<pair<Booking, Boolean>> bookings) {
-        this.bookings = bookings;
     }
 
     public String getName() {
