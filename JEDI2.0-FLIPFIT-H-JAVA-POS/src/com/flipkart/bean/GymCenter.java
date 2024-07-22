@@ -33,30 +33,30 @@ public class GymCenter {
     /* Method to add a new slot to the gym center.
      Returns a message indicating the success or failure of the operation.
      */
-    public String addSlot(String id, LocalDateTime st, LocalDateTime et, int capacity) {
-        for (Slot sl : slots) {
-            if (sl.getStarttime().equals(st)) {  // Check if a slot with the same start time already exists.
-                return "Slot already exists.";
-            }
-        }
-        // Create a new Slot object and add it to the slots list.
-        Slot slot = new Slot(id, st, et, capacity, new ArrayList<Booking>(), new ArrayList<Booking>());
-        slots.add(slot);
-        return "Slot added successfully.";
-    }
+//    public String addSlot(String id, LocalDateTime st, LocalDateTime et, int capacity) {
+//        for (Slot sl : slots) {
+//            if (sl.getStarttime().equals(st)) {  // Check if a slot with the same start time already exists.
+//                return "Slot already exists.";
+//            }
+//        }
+//        // Create a new Slot object and add it to the slots list.
+//        Slot slot = new Slot(id, st, et, capacity, new ArrayList<Booking>(), new ArrayList<Booking>());
+//        slots.add(slot);
+//        return "Slot added successfully.";
+//    }
 
     /* Method to remove a slot from the gym center based on its start time.
      Returns a message indicating the success or failure of the operation.
      */
-    public String removeSlot(LocalDateTime st) {
-        for (Slot sl : slots) {
-            if (sl.getStarttime().equals(st)) {  // Check if a slot with the specified start time exists.
-                slots.remove(sl);               // Remove the slot from the slots list.
-                return "Slot removed successfully.";
-            }
-        }
-        return "Slot doesn't exist to remove.";
-    }
+//    public String removeSlot(LocalDateTime st) {
+//        for (Slot sl : slots) {
+//            if (sl.getStarttime().equals(st)) {  // Check if a slot with the specified start time exists.
+//                slots.remove(sl);               // Remove the slot from the slots list.
+//                return "Slot removed successfully.";
+//            }
+//        }
+//        return "Slot doesn't exist to remove.";
+//    }
 
     // Getter for slots.
     public List<Slot> getSlots() {

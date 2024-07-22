@@ -6,6 +6,7 @@ public class sharedState {
     private static int cntUsers = getTableCnt("user");
     private static int cntCenters = getTableCnt("gym_center");
     private static int cntCity = getTableCnt("city");
+    private static int cntSlot = getTableCnt("slot");
 
     public static int getCntUsers() {
         return cntUsers;
@@ -31,4 +32,7 @@ public class sharedState {
         cntCity++;
     }
 
+    public static int getCntSlot() {return cntSlot;}
+
+    public static void incrementCntSlot() {cntCity++;}
 }

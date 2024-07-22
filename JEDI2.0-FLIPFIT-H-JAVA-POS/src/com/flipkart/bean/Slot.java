@@ -1,7 +1,6 @@
 package com.flipkart.bean;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 // Represents a time slot at a gym center.
@@ -13,6 +12,16 @@ public class Slot {
     private List<Booking> bookings;
     private List<Booking> waitings;
 
+    public String getGymID() {
+        return gymID;
+    }
+
+    public void setGymID(String gymID) {
+        this.gymID = gymID;
+    }
+
+    private String gymID;
+
     /* Constructor to initialize a Slot object.
      Parameters:
      slotID: Unique ID of the slot.
@@ -22,13 +31,14 @@ public class Slot {
      bookings: List of bookings already made for this slot.
      waitings: List of bookings on waiting list for this slot.
      */
-    public Slot(String slotID, LocalDateTime starttime, LocalDateTime endtime, int capacity, List<Booking> bookings, List<Booking> waitings) {
+    public Slot(String slotID, LocalDateTime starttime, LocalDateTime endtime, int capacity, String gymID) {
         this.slotID = slotID;
         this.starttime = starttime;
         this.endtime = endtime;
         this.capacity = capacity;
-        this.bookings = bookings != null ? bookings : new ArrayList<>();   // Initialize bookings list if null.
-        this.waitings = waitings != null ? waitings : new ArrayList<>();   // Initialize waitings list if null.
+        this.gymID = gymID;
+//        this.bookings = bookings != null ? bookings : new ArrayList<>();   // Initialize bookings list if null.
+//        this.waitings = waitings != null ? waitings : new ArrayList<>();   // Initialize waitings list if null.
     }
 
     // Getter for waitings.
