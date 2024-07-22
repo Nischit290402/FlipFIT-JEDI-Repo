@@ -21,6 +21,7 @@ public class UserService implements UserServiceInterface {
     // HashMap to store users with their usernames as keys
     static HashMap<String, User> UsersMap = new HashMap<>();
     // UserDAO instance to interact with the data access layer
+    private UserDAOImpl userDAOImpl = new UserDAOImpl();
     private UserDAO userDAO;
 
     /**
@@ -37,7 +38,6 @@ public class UserService implements UserServiceInterface {
     @Override
     public User login(String username, String password) throws InvalidLogin {
         // Fetch the user from user DB based on the provided username
-        UserDAOImpl userDAOImpl = new UserDAOImpl();
         User user = userDAOImpl.validateUser(username, password);
         if (user!=null) {
             return user;
@@ -52,14 +52,6 @@ public class UserService implements UserServiceInterface {
     @Override
     public boolean validatePassword(User user, String oldPassword) {
         return user.getPassword().equals(oldPassword);
-    }
-
-    /**
-     * Placeholder method for login, not implemented
-     */
-    @Override
-    public User Login(String username, String password) {
-        return null;
     }
 
     /**

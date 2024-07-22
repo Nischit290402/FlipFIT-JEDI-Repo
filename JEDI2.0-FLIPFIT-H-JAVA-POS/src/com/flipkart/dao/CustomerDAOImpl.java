@@ -1,8 +1,13 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.Booking;
-import com.flipkart.bean.Slot;
+import com.flipkart.bean.*;
+import com.flipkart.utils.dbutils;
 
+import java.awt.print.Book;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -60,4 +65,30 @@ public class CustomerDAOImpl implements CustomerDAO {
 //    public void addBooking(Booking booking) {
 //        bookings.add(booking);
 //    }
+    public Customer getCustomer(User user) {
+        Customer customer = null;
+        String sql = "SELECT * FROM customer WHERE username = ?";
+        List<Booking> bookings = null;
+        try (Connection connection = dbutils.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, user.getUsername());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String username = resultSet.getString("username");
+                    String userid = resultSet.getString("userid");
+                    String name = resultSet.getString("name");
+                    String email = resultSet.getString("email");
+                    String contactNo = resultSet.getString("contactNo");
+                    int age = resultSet.getInt("age");
+
+                    customer = new Customer(username, name, email, contactNo, age, user.getPassword(), userid, user.getRoleId(), bookings);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
 }

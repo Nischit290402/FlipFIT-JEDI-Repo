@@ -1,5 +1,6 @@
 package com.flipkart.client;
 
+import com.flipkart.bean.GymOwner;
 import com.flipkart.business.GymOwnerService;
 import com.flipkart.business.UserService;
 import com.flipkart.bean.User;
@@ -58,9 +59,9 @@ public class GymOwnerFlipfitMenu {
      * Displays the Gym Owner menu and handles user choices.
      * Provides options to view all gym centers, add a new gym center, edit gym slots, and logout.
      *
-     * @param user The currently logged-in gym owner user
+     * @param gymOwner The currently logged-in gym owner user
      */
-    public void showMenu(User user) {
+    public void showMenu(GymOwner gymOwner) {
         int gymOwnerChoice = -1;
 
         while (gymOwnerChoice != 4) { // Updated to 4 for logout
@@ -75,13 +76,13 @@ public class GymOwnerFlipfitMenu {
 
             switch (gymOwnerChoice) {
                 case 1:
-                    gymOwnerServiceInterface.showGymCenters(user);
+                    gymOwnerServiceInterface.showGymCenters(gymOwner);
                     break;
                 case 2:
-                    gymOwnerServiceInterface.addGymCenter(user);
+                    addGym(gymOwner);
                     break;
                 case 3:
-                    gymOwnerServiceInterface.editSlots(user);
+                    gymOwnerServiceInterface.editSlots(gymOwner);
                     break;
                 case 4:
                     System.out.println("Logging out.");
@@ -113,5 +114,22 @@ public class GymOwnerFlipfitMenu {
         } else {
             System.out.println("Wrong Old Password.");
         }
+    }
+
+    public void addGym(GymOwner gymOwner) {
+        System.out.println("Registering Gym Center");
+        System.out.println("Enter Gym Centre Name: ");
+        String gymName = scanner.nextLine();
+        System.out.println("Enter Gym Centre Address: ");
+        String address = scanner.nextLine();
+        System.out.println("Enter Gym Centre City: ");
+        String city = scanner.nextLine();
+        if(gymOwnerServiceInterface.addGymCenter(gymOwner, gymName, address, city)){
+            System.out.println("Gym Center registered successfully.");
+        }
+        else {
+            System.out.println("Error registering Gym Center.");
+        }
+
     }
 }

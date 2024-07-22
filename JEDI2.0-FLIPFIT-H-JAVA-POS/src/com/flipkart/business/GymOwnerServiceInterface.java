@@ -22,7 +22,7 @@ public interface GymOwnerServiceInterface {
     /**
      * Adds a gym center associated with the given user.
      */
-    public void addGymCenter(User user);
+    public boolean addGymCenter(GymOwner gymOwner, String gymName, String address, String cityName);
 
     /**
      * Displays the gym centers associated with the given user.
@@ -33,4 +33,5 @@ public interface GymOwnerServiceInterface {
      * Edits the slots for the gym centers associated with the given user.
      */
     public void editSlots(User user);
+
 }

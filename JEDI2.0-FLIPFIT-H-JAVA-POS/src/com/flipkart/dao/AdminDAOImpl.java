@@ -17,7 +17,7 @@ public class AdminDAOImpl {
 //        String query = "select name, email, contactNo, age from gymOwner";
 //        try {connection = dbutils.getConnection();
 //            // Step 2:Create a statement using connection object
-//            PreparedStatement preparedStatement = connection.prepareStatement(query);
+//            PreparedStatement = connection.prepareStatement(query);
 //            System.out.println();
 //            // Step 3: Execute the query or update query
 //            ResultSet rs = preparedStatement.executeQuery();

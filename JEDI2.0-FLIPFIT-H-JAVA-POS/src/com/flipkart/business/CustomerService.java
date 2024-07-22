@@ -2,6 +2,7 @@ package com.flipkart.business;
 
 import com.flipkart.bean.*;
 import com.flipkart.dao.*;
+import com.flipkart.utils.sharedState;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import static com.flipkart.utils.dbutils.getTableCnt;
 
 public class CustomerService implements CustomerServiceInterface{
-	private int cnt = getTableCnt("user");
+//	private int cnt = getTableCnt("user");
 	public HashMap<String, Customer> customers = new HashMap<String, Customer>();
 	UserService userService=new UserService();
 	GymOwnerService gymOwnerService=new GymOwnerService();
@@ -20,7 +21,8 @@ public class CustomerService implements CustomerServiceInterface{
 
 	public void createCustomer(String username, String name, String email, String phone, int age,
                                       String password) {
-		String id = "0" + ++cnt;
+		String id = "0" + sharedState.getCntUsers();
+		sharedState.incrementCntUsers();
 		Role role = new Role("C", "Customer");
 		List<Booking> bookings = new ArrayList<Booking>();
 		Customer customer = new Customer(username, name, email, phone, age, password, id, role.getRoleID(), bookings);

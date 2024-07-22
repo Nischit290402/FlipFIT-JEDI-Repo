@@ -1,8 +1,13 @@
 package com.flipkart.client;
 
+import com.flipkart.bean.Customer;
+import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 import com.flipkart.business.UserService;
+import com.flipkart.dao.CustomerDAOImpl;
+import com.flipkart.dao.GymOwnerDAOImpl;
+import com.flipkart.dao.UserDAOImpl;
 import com.flipkart.exception.InvalidLogin;
 
 import java.util.Scanner;
@@ -15,6 +20,8 @@ import java.util.Scanner;
 public class FlipfitApplication {
     // Static instance of AdminFlipfitMenu to be used throughout the application
     static AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
+    static GymOwnerDAOImpl gymOwnerDAOImpl = new GymOwnerDAOImpl();
+    static CustomerDAOImpl customerDAOImpl = new CustomerDAOImpl();
 
     /**
      * Main method to start the Flipfit application.
@@ -58,8 +65,12 @@ public class FlipfitApplication {
                     break;
                 case 3:
                     // Register a new gym owner
-                    gymOwnerFlipfitMenu.registerGymOwner(scanner);
-                    System.out.println("Gym Owner Registered");
+                    try {
+                        gymOwnerFlipfitMenu.registerGymOwner(scanner);
+                        System.out.println("Gym Owner Registered");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 4:
                     // Change password
@@ -105,11 +116,13 @@ public class FlipfitApplication {
                     break;
                 case "B":
                     System.out.println("Welcome GymOwner !!!");
+                    GymOwner gymOwner = gymOwnerDAOImpl.getGymOwner(user);
                     GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
-                    gymOwnerFlipfitMenu.showMenu(user);
+                    gymOwnerFlipfitMenu.showMenu(gymOwner);
                     break;
                 case "C":
                     System.out.println("Welcome Customer !!!");
+                    Customer customer = customerDAOImpl.getCustomer(user);
                     CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
                     customerFlipfitMenu.showMenu(user);
                     break;

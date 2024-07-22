@@ -25,6 +25,8 @@ public class GymOwnerDAOImpl implements GymOwnerDAO {
             return rowsInserted > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            dbutils.closeConnection();
         }
         return false;
     }
@@ -51,10 +53,39 @@ public class GymOwnerDAOImpl implements GymOwnerDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            dbutils.closeConnection();
         }
 
         return gymCenters;
     }
+
+    public GymOwner getGymOwner(User user) {
+        GymOwner gymOwner = null;
+        String sql = "SELECT * FROM gym_owner WHERE username = ?";
+
+        try (Connection connection = dbutils.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, user.getUsername());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String username = resultSet.getString("username");
+                    String userid = resultSet.getString("userid");
+                    String name = resultSet.getString("name");
+                    String email = resultSet.getString("email");
+                    String contactNo = resultSet.getString("contactNo");
+                    int age = resultSet.getInt("age");
+
+                    gymOwner = new GymOwner(username, name, email, contactNo, age, user.getPassword(), userid, user.getRoleId());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gymOwner;
+    }
+
 
 //    public void addSlots()
 //    public List<GymCenter> getGymCenters(User user) {

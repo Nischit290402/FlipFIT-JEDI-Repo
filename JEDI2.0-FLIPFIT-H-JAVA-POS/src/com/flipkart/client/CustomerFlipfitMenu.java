@@ -71,6 +71,7 @@ public class CustomerFlipfitMenu {
             System.out.println("4. View Bookings");
             System.out.println("5. Cancel Booking");
             System.out.println("6. Change Password");
+            System.out.println("7. Logout");
             System.out.print("Enter your choice: ");
             userChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
@@ -94,6 +95,9 @@ public class CustomerFlipfitMenu {
                     break;
                 case 6:
                     changePassword(user);
+                    break;
+                case 7:
+                    System.out.println("Logging Out!");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");

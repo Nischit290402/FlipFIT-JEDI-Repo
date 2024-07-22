@@ -26,8 +26,6 @@ public interface UserServiceInterface {
 
     boolean validatePassword(User user, String oldPassword);
 
-    User Login(String username, String password);
-
     void confirmPassword(User user, String newPassword, String confirmPassword);
 
     boolean registerGymOwner(GymOwner gymOwner);

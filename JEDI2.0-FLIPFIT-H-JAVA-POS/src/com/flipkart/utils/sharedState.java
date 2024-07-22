@@ -1,0 +1,34 @@
+package com.flipkart.utils;
+
+import static com.flipkart.utils.dbutils.getTableCnt;
+
+public class sharedState {
+    private static int cntUsers = getTableCnt("user");
+    private static int cntCenters = getTableCnt("gym_center");
+    private static int cntCity = getTableCnt("city");
+
+    public static int getCntUsers() {
+        return cntUsers;
+    }
+
+    public static void incrementCntUsers() {
+        cntUsers++;
+    }
+
+    public static int getCntCenters() {
+        return cntCenters;
+    }
+
+    public static void incrementCntCenters() {
+        cntCenters++;
+    }
+
+    public static int getCntCity() {
+        return cntCity;
+    }
+
+    public static void incrementCntCity() {
+        cntCity++;
+    }
+
+}
