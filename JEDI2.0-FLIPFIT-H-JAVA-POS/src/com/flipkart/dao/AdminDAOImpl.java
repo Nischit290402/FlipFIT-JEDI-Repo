@@ -52,7 +52,6 @@ public class AdminDAOImpl {
             System.err.println("Error fetching gym owners: " + e.getMessage());
             throw new DAOException("Error fetching gym owners", e);
         } finally {
-            dbutils.closeConnection();
         }
 
         return customers;

@@ -73,11 +73,6 @@ public class UserService implements UserServiceInterface {
         UserDAOImpl userDAOImpl = new UserDAOImpl();
         User user = userDAOImpl.validateUser(username, password);
         if (user!=null) {
-////            if (user.getPassword().equals(password)) {
-////                return user;
-////            } else {
-////                throw new InvalidLogin("Incorrect password.");
-////            }
             return user;
         } else {
             throw new InvalidLogin("Username not found.");

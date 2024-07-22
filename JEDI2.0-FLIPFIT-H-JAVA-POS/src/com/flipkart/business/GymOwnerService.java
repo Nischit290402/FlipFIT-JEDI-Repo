@@ -11,16 +11,20 @@ import java.util.*;
 
 
 import com.flipkart.business.UserService;
+import com.flipkart.dao.UserDAOImpl;
+
+import static com.flipkart.utils.dbutils.getTableCnt;
 
 
 public class GymOwnerService implements  GymOwnerServiceInterface{
-    private static int cnt = 1;
+    private static int cnt = getTableCnt("user");
     Scanner scanner = new Scanner(System.in);
     UserService userService = new UserService();
     public static HashMap<String, List<GymCenter>> cityGymcenters= new HashMap<String, List<GymCenter>>();
     public HashMap<String, List<GymCenter>> getCityGymcenters(){
         return cityGymcenters;
     }
+
     public GymCenter searchcitygc(String name, String city){
         for(GymCenter i:cityGymcenters.get(city)){
             if(i.getGymName().equals(name)){
@@ -33,14 +37,19 @@ public class GymOwnerService implements  GymOwnerServiceInterface{
     public static HashMap<String, GymOwner> GymOwnerMap  = new HashMap<String,GymOwner>();
     public void createGymOwner(String username, String name, String mail, String phone, int age, String password) {
         System.out.println("Registering Gym Owner");
-        String id = "0" + cnt++;
+        String id = "0" + ++cnt;
         Role role=new Role("B", "GymOwner");
-        GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password, id, role.getRoleID());
-        PendingGymOwnerMap.put(id, gymOwner);
+        GymOwner gymOwner = new GymOwner(username, name, mail, phone, age, password, id, role.getRoleID());
+//        PendingGymOwnerMap.put(id, gymOwner);
         User user = new User(username, password, id, role.getRoleID());
-        userService.addUser(user);
-
-        System.out.println("Gym Owner registered successfully");
+//        userService.addUser(user);
+        UserDAOImpl userDAO = new UserDAOImpl();
+        boolean val1 = userDAO.addUser(user);
+        boolean val2 = userDAO.registerGymOwner(gymOwner);
+        if(val1 && val2){
+            System.out.println("Gym Owner registered successfully");
+        }
+        else System.out.println("Customer creation failed");
     }
 
 //    private void addUser(User user) {
