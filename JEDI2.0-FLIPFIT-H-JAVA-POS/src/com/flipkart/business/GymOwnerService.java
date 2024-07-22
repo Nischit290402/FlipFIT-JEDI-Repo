@@ -62,7 +62,7 @@ public class GymOwnerService implements GymOwnerServiceInterface {
      */
     public void createGymOwner(String username, String name, String mail, String phone, int age, String password) {
         System.out.println("Registering Gym Owner");
-        String id = "0" + sharedState.getCntUsers();
+        String id = "O" + sharedState.getCntUsers();
         sharedState.incrementCntUsers();
         Role role = new Role("B", "GymOwner");
         GymOwner gymOwner = new GymOwner(username, name, mail, phone, age, password, id, role.getRoleID());
@@ -116,38 +116,50 @@ public class GymOwnerService implements GymOwnerServiceInterface {
 //        GymOwner gymOwner = GymOwnerMap.get(user.getUserid());
         GymOwnerDAOImpl gymOwnerDAO = new GymOwnerDAOImpl();
         List<GymCenter> gymCenters = gymOwnerDAO.getGymCenters(user.getUserid());
-        System.out.println(gymCenters.get(gymCenters.size()-1));
 //        print all gym centers
-
-        for (GymCenter element : gymCenters) {
-            System.out.println(element.getGymName());
+        for (GymCenter gymCenter : gymCenters) {
+            System.out.println("Gym ID: " + gymCenter.getGymID() + ", Gym Name: " + gymCenter.getGymName());
         }
     }
 
+    public boolean searchGC(String gymID, List<GymCenter> gymCenters) {
+//        boolean found = false;
+        GymCenter gymC = null;
+        for (GymCenter gymCenter : gymCenters) {
+            if (gymCenter.getGymID().equals(gymID)) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Edits the slots for the gym centers associated with the given user.
      */
-    public void editSlots(User user) {
+    public void editSlots(GymOwner gymOwner) {
         System.out.println("Enter City: ");
         String city = scanner.nextLine();
         int c = 1;
-        GymOwner go = GymOwnerMap.get(user.getUserid());
-        for (GymCenter gc : go.gymCenters) {
+        List<GymCenter> gymCenters = gymOwnerDAO.getGymCenters(gymOwner.getUserid());
+
+//        GymOwner go = GymOwnerMap.get(user.getUserid());
+        for (GymCenter gc : gymCenters) {
             if (gc.getCity().equals(city)) {
-                System.out.println(c + ". " + gc.getGymName());
+                System.out.println(c + ". Gym ID: " + gc.getGymID() + ", Gym Name: " + gc.getGymName());
+//                System.out.println(c + ". " + gc.getGymName());
                 c++;
             }
         }
-        System.out.println("Enter Gym Name: ");
-        String gn = scanner.nextLine();
+        System.out.println("Enter Gym ID: ");
+        String gid= scanner.nextLine();
         System.out.println("1. Add Slot");
         System.out.println("2. Remove Slot");
-        String ch = scanner.nextLine();
+        int ch = scanner.nextInt();
         switch (ch) {
-            case "1":
-                if (go.searchGC(gn, city) != null) {
-                    GymCenter gc = go.searchGC(gn, city);
-                    String id = "0" + gc.getSlots().size() + 1;
+            case 1:
+                if (searchGC(gid,gymCenters)) {
+//                    GymCenter gc = searchGC(gid,gymCenters);
+                    sharedState.incrementCntSlot();
+                    String id = "S" + sharedState.getCntSlot();
                     System.out.println("Enter year(yyyy): ");
                     int year = scanner.nextInt();
                     System.out.println("Enter month(mm): ");
@@ -159,15 +171,17 @@ public class GymOwnerService implements GymOwnerServiceInterface {
                     LocalDateTime st = LocalDateTime.of(year, month, date, hr, 0, 0);
                     System.out.println("Enter capacity of slot: ");
                     int cp = scanner.nextInt();
-                    String result = gc.addSlot(id, st, st.plusHours(1), cp);
-                    System.out.println(result);
+                    Slot slt = new Slot(id, st, st.plusHours(1),cp,gid);
+                    gymOwnerDAO.addSlots(gid, slt);
+//                    String result = gc.addSlot(id, st, st.plusHours(1), cp);
+//                    System.out.println(result);
                 } else {
-                    System.out.println("Invalid Gym Name.");
+                    System.out.println("Invalid Gym ID.");
                 }
                 break;
-            case "2":
-                if (go.searchGC(gn, city) != null) {
-                    GymCenter gc = go.searchGC(gn, city);
+            case 2:
+                if (searchGC(gid, gymCenters)) {
+//                    GymCenter gc = searchGC(gid, gymCenters);
                     System.out.println("Enter year(yyyy): ");
                     int year = scanner.nextInt();
                     System.out.println("Enter month(mm): ");
@@ -177,10 +191,9 @@ public class GymOwnerService implements GymOwnerServiceInterface {
                     System.out.println("Enter hour according to 24hrs clock: ");
                     int hr = scanner.nextInt();
                     LocalDateTime st = LocalDateTime.of(year, month, date, hr, 0, 0);
-                    String result = gc.removeSlot(st);
-                    System.out.println(result);
+                    gymOwnerDAO.removeSlot(gid,st);
                 } else {
-                    System.out.println("Invalid Gym Name.");
+                    System.out.println("Invalid Gym ID.");
                 }
                 break;
             default:
