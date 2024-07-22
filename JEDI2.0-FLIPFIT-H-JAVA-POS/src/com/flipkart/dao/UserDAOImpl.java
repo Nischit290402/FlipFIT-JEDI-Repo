@@ -29,7 +29,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User validateUser(String username, String password) {
-        String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM User WHERE username = ? AND password = ?";
+      
         try (Connection connection = dbutils.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, username);

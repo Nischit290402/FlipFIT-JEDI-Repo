@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import com.flipkart.business.UserService;
+import com.flipkart.dao.GymOwnerDAOImpl;
 import com.flipkart.dao.UserDAOImpl;
 
 import static com.flipkart.utils.dbutils.getTableCnt;
@@ -86,24 +87,35 @@ public class GymOwnerService implements GymOwnerServiceInterface {
         String address = scanner.nextLine();
         System.out.println("Enter Gym Centre City: ");
         String city = scanner.nextLine();
-        String id = "GC" + GymOwner.gymCenters.size() + 1;
-        List<Slot> slots = new ArrayList<>();
-        GymCenter gymCenter = new GymCenter(id, gymName, address, city, slots);
+        String id = "GC" + GymOwner.gymCenters.size()+1;
+        List<Slot> slots=new ArrayList<>();
+        GymCenter gymCenter = new GymCenter(id, gymName, address, city, slots, user.getUserid());
+
         cityGymcenters.get(city).add(gymCenter);
         cityGymcenters.replace(city, cityGymcenters.get(city));
         AdminService.pendingCenters.put(id, gymCenter);
-        GymOwnerMap.put(user.getUserid(), GymOwner);
-        System.out.println("Gym Center added successfully");
+//        GymOwnerMap.put(user.getUserid(), GymOwner);
+        GymOwnerDAOImpl gymOwnerDAO = new GymOwnerDAOImpl();
+        boolean addGymCenter = gymOwnerDAO.addGymCenter(gymCenter);
+        if(addGymCenter){
+            System.out.println("Gym Owner registered successfully");
+        }
+        else
+            System.out.println("Gym Owner not registered successfully");
+//        System.out.println("Gym Center added successfully");
     }
 
     /**
      * Displays the gym centers associated with the given user.
      */
     public void showGymCenters(User user) {
-        GymOwner gymOwner = GymOwnerMap.get(user.getUserid());
-        System.out.println(gymOwner.gymCenters.get(gymOwner.gymCenters.size() - 1));
-        // Print all gym centers
-        for (GymCenter element : gymOwner.gymCenters) {
+//        GymOwner gymOwner = GymOwnerMap.get(user.getUserid());
+        GymOwnerDAOImpl gymOwnerDAO = new GymOwnerDAOImpl();
+        List<GymCenter> gymCenters = gymOwnerDAO.getGymCenters(user.getUserid());
+        System.out.println(gymCenters.get(gymCenters.size()-1));
+//        print all gym centers
+
+        for (GymCenter element : gymCenters) {
             System.out.println(element.getGymName());
         }
     }

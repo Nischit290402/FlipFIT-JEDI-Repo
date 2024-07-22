@@ -10,6 +10,7 @@ public class GymCenter {
     private String gymName;
     private String address;
     private String city;
+    private String gymOwnerID;
     private List<Slot> slots;
 
     /* Constructor to initialize a GymCenter object.
@@ -20,12 +21,13 @@ public class GymCenter {
      city: City where the gym center is located.
      slots: List of slots available at the gym center.
      */
-    public GymCenter(String gymID, String gymName, String address, String city, List<Slot> slots) {
+    public GymCenter(String gymID, String gymName, String address, String city, List<Slot> slots,  String gymOwnerID) {
         this.gymID = gymID;
         this.gymName = gymName;
         this.address = address;
         this.city = city;
-        this.slots = slots;
+        this.slots=slots;
+        this.gymOwnerID=gymOwnerID;
     }
 
     /* Method to add a new slot to the gym center.
@@ -99,6 +101,16 @@ public class GymCenter {
     // Getter for city.
     public String getCity() {
         return city;
+    }
+  
+    // Getter for Gym Owner ID.
+    public String getGymOwnerID() {
+        return gymOwnerID;
+    }
+  
+    // Setter for Gym Owner ID.
+    public void setGymOwnerID(String gymOwnerID) {
+        this.gymOwnerID = gymOwnerID;
     }
 
     // Setter for city.
