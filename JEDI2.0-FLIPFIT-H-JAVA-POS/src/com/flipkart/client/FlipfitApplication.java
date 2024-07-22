@@ -4,6 +4,7 @@ package com.flipkart.client;
 import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 import com.flipkart.business.UserService;
+import com.flipkart.exception.InvalidLogin;
 
 
 import java.util.Scanner;
@@ -60,7 +61,7 @@ public class FlipfitApplication {
         }
     }
 
-    public void handleLogin(){
+    public void handleLogin() throws InvalidLogin {
         Scanner scanner = new Scanner(System.in);
 
         // Prompt the user for email and password
@@ -69,7 +70,7 @@ public class FlipfitApplication {
         UserService userService=new UserService();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
-        User user = userService.Login(username, password);
+        User user = userService.login(username, password);
         if (user != null) {
             System.out.println("Logged in successfully.");
             String id = user.getUserid();
