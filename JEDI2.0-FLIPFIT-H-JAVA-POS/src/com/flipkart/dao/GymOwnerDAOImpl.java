@@ -56,7 +56,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO {
         return gymCenters;
     }
 
-    public void addSlots()
+//    public void addSlots()
 //    public List<GymCenter> getGymCenters(User user) {
 //        List<GymCenter> gymCenters = new ArrayList<>();
 //        String sql = "SELECT * FROM gym_center WHERE gymOwnerID = ?";
