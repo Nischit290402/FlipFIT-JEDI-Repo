@@ -1,49 +1,9 @@
-//
-//package com.flipkart.business;
-//
-//import com.flipkart.bean.User;
-//
-//import java.util.HashMap;
-//
-//public class UserService implements UserServiceInterface{
-//    public static HashMap<String, User> UsersMap  = new HashMap<>();
-//    public void addUser(User user) {
-//        UsersMap.put(user.getUsername(), user);
-//    }
-//
-//    public User Login(String username, String password) {
-//        User = UsersMap.get(username);
-//        if(user != null) {
-//            if(user.getPassword().equals(password)) return user;
-//            else return null;
-//        }
-//        return null;
-//    }
-//
-//    public boolean validatePassword(User user, String oldPassword){
-//        String valPassword = user.getPassword();
-//
-//        return oldPassword.equals(valPassword);
-//    }
-//
-//    public void confirmPassword(User user,String newPassword, String confirmPassword){
-//        if(newPassword.equals(confirmPassword)) {
-//            System.out.println("Password Changed Successfully");
-//            user.setPassword(newPassword);
-//            UsersMap.put(user.getUsername(), user);
-//        }
-//        else{
-//            System.out.println("Password did not match");
-//        }
-//    }
-//
-//}
+// Package declaration
+        package com.flipkart.business;
 
-package com.flipkart.business;
-
+// Import necessary classes
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymOwner;
-import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 import com.flipkart.dao.UserDAO;
 import com.flipkart.dao.UserDAOImpl;
@@ -51,25 +11,32 @@ import com.flipkart.exception.InvalidLogin;
 
 import java.util.HashMap;
 
+/**
+ * This class implements the UserServiceInterface and provides methods
+ * to manage user-related operations such as adding a user, logging in,
+ * validating passwords, confirming password changes, and registering
+ * gym owners and customers.
+ */
 public class UserService implements UserServiceInterface {
+    // HashMap to store users with their usernames as keys
     static HashMap<String, User> UsersMap = new HashMap<>();
+    // UserDAO instance to interact with the data access layer
     private UserDAO userDAO;
 
-//    public UserService() {
-//        this.userDAO = new UserDAOImpl();
-//        // Add admin user
-//        Role role = new Role();
-//        UsersMap.put("admin", new User("admin", "admin@domain.com", "admin", ));
-//    }
-
+    /**
+     * Adds a user to the UsersMap
+     */
     @Override
     public void addUser(User user) {
         UsersMap.put(user.getUsername(), user);
     }
 
+    /**
+     * Logs in a user by validating the username and password.
+     */
     @Override
     public User login(String username, String password) throws InvalidLogin {
-//        User = UsersMap.get(username);
+        // Fetch the user from user DB based on the provided username
         UserDAOImpl userDAOImpl = new UserDAOImpl();
         User user = userDAOImpl.validateUser(username, password);
         if (user!=null) {
@@ -79,16 +46,25 @@ public class UserService implements UserServiceInterface {
         }
     }
 
+    /**
+     * Validates if the given old password matches the user's current password.
+     */
     @Override
     public boolean validatePassword(User user, String oldPassword) {
         return user.getPassword().equals(oldPassword);
     }
 
+    /**
+     * Placeholder method for login, not implemented
+     */
     @Override
     public User Login(String username, String password) {
         return null;
     }
 
+    /**
+     * Confirms and updates the user's password if the new password and confirm password match.
+     */
     @Override
     public void confirmPassword(User user, String newPassword, String confirmPassword) {
         if (newPassword.equals(confirmPassword)) {
@@ -100,14 +76,19 @@ public class UserService implements UserServiceInterface {
         }
     }
 
+    /**
+     * Registers a gym owner
+     */
     @Override
     public boolean registerGymOwner(GymOwner gymOwner) {
         return userDAO.registerGymOwner(gymOwner);
     }
 
+    /**
+     * Registers a customer
+     */
     @Override
     public boolean registerCustomer(Customer customer) {
         return userDAO.registerCustomer(customer);
     }
 }
-

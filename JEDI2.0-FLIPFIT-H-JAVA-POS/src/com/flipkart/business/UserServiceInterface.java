@@ -1,18 +1,41 @@
+// Package declaration
 package com.flipkart.business;
 
+// Import necessary classes
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.User;
 import com.flipkart.exception.InvalidLogin;
 
+/**
+ This interface defines the operations related to user management.
+ This includes adding users, user login, password validation, password confirmation,
+ and registration of gym owners and customers.
+ */
 public interface UserServiceInterface {
+
+    /**
+     * Adds a new user
+     */
     public void addUser(User user);
 
+    /**
+     * Authenticates a user with the given username and password.
+     */
     public User login(String username, String password) throws InvalidLogin;
 
-    public boolean validatePassword(User user, String oldPassword);
-    public User Login(String username, String password);
-    public void confirmPassword(User user,String newPassword, String confirmPassword);
-    public boolean registerGymOwner(GymOwner gymOwner);
-    public boolean registerCustomer(Customer customer);
+    boolean validatePassword(User user, String oldPassword);
+
+    User Login(String username, String password);
+
+    void confirmPassword(User user, String newPassword, String confirmPassword);
+
+    boolean registerGymOwner(GymOwner gymOwner);
+
+    boolean registerCustomer(Customer customer);
+
+
+/**
+ Validates the user's old password
+ */
 }
