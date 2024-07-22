@@ -43,6 +43,7 @@ public class CustomerFlipfitMenu {
             System.out.println("3. Book Slot");
             System.out.println("4. View Bookings");
             System.out.println("5. Cancel Booking");
+            System.out.println("6. Logout");
             System.out.print("Enter your choice: ");
             userChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
@@ -64,8 +65,9 @@ public class CustomerFlipfitMenu {
 
                     customerService.cancelbookings(user.getUserid());
                     break;
-                
-                    
+                case 6:
+                    FlipfitApplication.homePage();
+                    break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }

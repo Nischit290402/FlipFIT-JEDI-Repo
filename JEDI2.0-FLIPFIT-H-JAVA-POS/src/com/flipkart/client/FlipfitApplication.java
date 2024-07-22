@@ -11,6 +11,14 @@ import java.util.Scanner;
 public class FlipfitApplication {
     AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
     public static void main(String[] args) {
+
+//        AdminFlipfitMenu adminMenu = new AdminFlipfitMenu(scanner);
+//         FlipfitApplication app = new FlipfitApplication();
+         FlipfitApplication.homePage();
+
+    }
+
+    public static void homePage(){
         Scanner scanner = new Scanner(System.in);
         FlipfitApplication app = new FlipfitApplication();
         AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
@@ -19,8 +27,6 @@ public class FlipfitApplication {
         GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
 
         System.out.println("Welcome to Flipfit");
-//        AdminFlipfitMenu adminMenu = new AdminFlipfitMenu(scanner);
-
         int choice = -1;
 
         while (choice != 5) {
@@ -43,8 +49,8 @@ public class FlipfitApplication {
                     customerFlipfitMenu.registerCustomer(scanner);
                     System.out.println("Customer Registered");
                     break;
-                 case 3:
-                     gymOwnerFlipfitMenu.registerGymOwner(scanner);
+                case 3:
+                    gymOwnerFlipfitMenu.registerGymOwner(scanner);
                     System.out.println("Gym Owner Registered");
                     break;
                 case 4:
@@ -59,7 +65,6 @@ public class FlipfitApplication {
             }
         }
     }
-
     public void handleLogin(){
         Scanner scanner = new Scanner(System.in);
 

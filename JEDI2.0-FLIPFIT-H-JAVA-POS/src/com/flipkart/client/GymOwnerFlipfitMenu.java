@@ -60,7 +60,8 @@ public class GymOwnerFlipfitMenu {
                     gymOwnerServiceInterface.editSlots(user);
                     break;
                 case 4:
-//                    gymOwnerServiceInterface.logout();
+                    System.out.println("Logging out.!");
+                    FlipfitApplication.homePage();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");

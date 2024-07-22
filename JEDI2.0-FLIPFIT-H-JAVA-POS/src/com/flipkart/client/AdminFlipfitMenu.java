@@ -56,6 +56,7 @@ public class AdminFlipfitMenu {
                     changePassword(user);
                 case 7:
                     System.out.println("Logging out.");
+                    FlipfitApplication.homePage();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
