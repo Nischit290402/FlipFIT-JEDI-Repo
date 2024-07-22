@@ -35,9 +35,9 @@ public class GymOwnerService implements  GymOwnerServiceInterface{
         System.out.println("Registering Gym Owner");
         String id = "0" + cnt++;
         Role role=new Role("B", "GymOwner");
-        GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password, id, role);
+        GymOwner gymOwner = new GymOwner(username,name, mail, phone, age, password, id, role.getRoleID());
         PendingGymOwnerMap.put(id, gymOwner);
-        User user = new User(username, password, id, role);
+        User user = new User(username, password, id, role.getRoleID());
         userService.addUser(user);
 
         System.out.println("Gym Owner registered successfully");

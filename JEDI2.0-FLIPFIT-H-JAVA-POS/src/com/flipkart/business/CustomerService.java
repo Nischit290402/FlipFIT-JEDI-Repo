@@ -21,9 +21,9 @@ public class CustomerService implements CustomerServiceInterface{
 		String id = "0" + cnt++;
 		Role role = new Role("C", "Customer");
 		List<Booking> bookings = new ArrayList<Booking>();
-		Customer customer = new Customer(username, name, email, phone, age, id, password, role, bookings);
+		Customer customer = new Customer(username, name, email, phone, age, id, password, role.getRoleID(), bookings);
 		customers.put(id, customer);
-		User user = new User(username, password, id, role);
+		User user = new User(username, password, id, role.getRoleID());
 		userService.addUser(user);
 		System.out.println("Customer created");
 	}

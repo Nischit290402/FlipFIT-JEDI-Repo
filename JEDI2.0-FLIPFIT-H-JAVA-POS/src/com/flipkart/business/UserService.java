@@ -69,14 +69,15 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User login(String username, String password) throws InvalidLogin {
-//        User user = UsersMap.get(username);
-        User user = UserDAOImpl.validateUser(username, password);
+//        User = UsersMap.get(username);
+        UserDAOImpl userDAOImpl = new UserDAOImpl();
+        User user = userDAOImpl.validateUser(username, password);
         if (user!=null) {
-//            if (user.getPassword().equals(password)) {
-//                return user;
-//            } else {
-//                throw new InvalidLogin("Incorrect password.");
-//            }
+////            if (user.getPassword().equals(password)) {
+////                return user;
+////            } else {
+////                throw new InvalidLogin("Incorrect password.");
+////            }
             return user;
         } else {
             throw new InvalidLogin("Username not found.");

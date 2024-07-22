@@ -11,8 +11,9 @@ public class AdminService implements AdminServiceInterface {
     public static Map<String, GymCenter> gymCenters = new HashMap<>();
     public static Map<String, GymCenter> pendingCenters = new HashMap<>();
     private void initializeAdmin() {
-        Admin admin = new Admin("bean", "BeanAdmin", "bean@gmail.com", "1234567890", 0, "bean@1234", "A_0", new Role("A","ADMIN"));
-        User user = new User(admin.getUsername(), admin.getPassword(), admin.getUserid(), admin.getRole());
+        Role role = new Role("A","ADMIN");
+        Admin admin = new Admin("bean", "BeanAdmin", "bean@gmail.com", "1234567890", 0, "bean@1234", "A_0", role.getRoleID());
+        User user = new User(admin.getUsername(), admin.getPassword(), admin.getUserid(), admin.getRoleId());
         userService.addUser(user);
     }
 

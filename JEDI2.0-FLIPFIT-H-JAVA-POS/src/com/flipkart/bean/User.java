@@ -4,12 +4,12 @@ public class User {
     private String username;
     private String password;
     private String userid;
-    private Role role;
-    public User(String username, String password, String id, Role role){
+    private String roleId;
+    public User(String username, String password, String id, String roleId){
         this.username=username;
         this.password=password;
         this.userid =id;
-        this.role =role;
+        this.roleId =roleId;
     }
 
     public String getUserid() {
@@ -20,12 +20,12 @@ public class User {
         this.userid = userid;
     }
 
-    public Role getRole() {
-        return role;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(String roleId) {
+        this.roleId = roleId;
     }
     public String getUsername() {
         return username;

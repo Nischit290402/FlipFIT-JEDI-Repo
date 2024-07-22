@@ -10,11 +10,10 @@ import com.flipkart.exception.InvalidLogin;
 import java.util.Scanner;
 
 public class FlipfitApplication {
-    AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
-    public static void main(String[] args) {
+    static AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
+    public static void main(String[] args) throws InvalidLogin {
         Scanner scanner = new Scanner(System.in);
         FlipfitApplication app = new FlipfitApplication();
-        AdminFlipfitMenu adminFlipfitMenu = new AdminFlipfitMenu();
         CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
         ForgotPasswordMenu forgotPasswordMenu = new ForgotPasswordMenu(scanner);
         GymOwnerFlipfitMenu gymOwnerFlipfitMenu = new GymOwnerFlipfitMenu(scanner);
@@ -38,7 +37,7 @@ public class FlipfitApplication {
             switch (choice) {
                 case 1:
                     // Call the Handle login file
-                    app.handleLogin();
+                    handleLogin();
                     break;
                 case 2:
                     customerFlipfitMenu.registerCustomer(scanner);
@@ -61,7 +60,7 @@ public class FlipfitApplication {
         }
     }
 
-    public void handleLogin() throws InvalidLogin {
+    public static void handleLogin() throws InvalidLogin {
         Scanner scanner = new Scanner(System.in);
 
         // Prompt the user for email and password
@@ -74,8 +73,8 @@ public class FlipfitApplication {
         if (user != null) {
             System.out.println("Logged in successfully.");
             String id = user.getUserid();
-            Role role = user.getRole();
-            switch (role.getRoleID()) {
+            String roleId = user.getRoleId();
+            switch (roleId) {
                 case "A":
                     System.out.println("Welcome Admin !!!");
                     adminFlipfitMenu.showMenu(user);

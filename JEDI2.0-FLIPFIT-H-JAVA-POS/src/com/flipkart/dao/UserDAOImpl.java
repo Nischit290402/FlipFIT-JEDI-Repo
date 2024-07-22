@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 import com.flipkart.utils.dbutils;
 
@@ -22,7 +23,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 if (rs.getString("username").equals(username) && rs.getString("password").equals(password)) {
-                    User user = new User(rs.getString("username"), rs.getString("password"), rs.getString("roleId"), )
+                    User user = new User(rs.getString("username"), rs.getString("password"), rs.getString("userid"), rs.getString("roleId"));
                     return user;
                 }
                 else {

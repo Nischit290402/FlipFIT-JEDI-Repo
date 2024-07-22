@@ -9,8 +9,8 @@ public class Customer extends User {
     private String phone;
     private int age;
     private List<pair<Booking, Boolean>> bookings;
-    public Customer(String username, String Name, String Email, String contactNo, int age, String password, String ID, Role role, List<Booking> bookings) {
-        super(username, password, ID, role);
+    public Customer(String username, String Name, String Email, String contactNo, int age, String password, String ID, String roleID, List<Booking> bookings) {
+        super(username, password, ID, roleID);
         this.name = Name;
         this.email = Email;
         this.phone = contactNo;

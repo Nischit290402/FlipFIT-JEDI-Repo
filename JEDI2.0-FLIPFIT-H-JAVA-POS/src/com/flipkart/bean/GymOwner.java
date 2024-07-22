@@ -11,8 +11,8 @@ public class GymOwner extends User {
     private String contactNo;
     private int age;
     public List<GymCenter> gymCenters;
-    public GymOwner(String username, String name, String email, String contactNo, int age, String password, String id, Role role) {
-        super(username, password, id, role);
+    public GymOwner(String username, String name, String email, String contactNo, int age, String password, String id, String roleId) {
+        super(username, password, id, roleId);
         this.name=name;
         this.email=email;
         this.contactNo=contactNo;
