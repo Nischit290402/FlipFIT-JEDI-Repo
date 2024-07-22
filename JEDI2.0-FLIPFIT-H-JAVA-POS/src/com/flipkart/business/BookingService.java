@@ -45,7 +45,7 @@ public class BookingService {
         }
 
     }
-    public void bookSlot(String userid, GymCenter gymCenter, LocalDateTime st){
+    public Boolean bookSlot(String userid, GymCenter gymCenter, LocalDateTime st){
 
         List<Slot> slots=gymCenter.getSlots();
         Slot slot = null;
@@ -74,46 +74,10 @@ public class BookingService {
                 System.out.println("Previous overlapping booking is cancelled.");
             }
             System.out.println("Confirm booking at "+ gymCenter.getGymName()+" "+st+".");
+            return true;
         }
-        else{
-            System.out.println("Slot is already full.");
-            CustomerService customerService=new CustomerService();
-            Customer customer=customerService.customers.get(userid);
-            int f=0;
-            pair<Booking, Boolean> oldbk=null;
-            for(pair<Booking, Boolean> bk:customer.getBookings()){
-                if(bk.getFirst().getStarttime()==st){
-                    oldbk=bk;
-                    if(bk.getSecond()){
-                        f=1;
-                    }
-                }
-            }
-            if(f==1){
-                System.out.println("You already have confirmed booking for this time slot "+st+" at "+oldbk.getFirst().getGymCenter().getGymName()+".");
-                System.out.println("Note: If you wish to book slot you will loose previous confirmed booking.");
-            }
-            System.out.println("Do you still want to book slot in waitlist?");
-            System.out.println("Enter choice: ");
-            System.out.println("1. YES");
-            System.out.println("2. NO");
-            String ch=scanner.nextLine();
-            switch (ch){
-                case "1":
-                    cancelslotbooking(userid, oldbk.getFirst().getGymCenter(), st);
-                    slot.getWaitings().add(newbooking);
-                    customer.getBookings().add(new pair<>(newbooking,false));
-                    if(f==1){
-                        System.out.println("Previous overlapping booking is cancelled.");
-                    }
-                    System.out.println("Booking on the waitlist at "+gymCenter.getGymName()+" "+st+".");
-                    break;
-                case "2":
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
-            }
-        }
+        return false;
+
     }
 
 }
