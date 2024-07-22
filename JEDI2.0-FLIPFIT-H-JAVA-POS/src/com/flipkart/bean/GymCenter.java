@@ -7,15 +7,17 @@ public class GymCenter {
     private String gymName;
     private String address;
     private String city;
+    private String gymOwnerID;
     private List<Slot> slots;
 //    private Map<String, GymCenter> gymCentres = new HashMap<>();
 //    private Map<String, GymCenter> pendingCentres = new HashMap<>();
-    public GymCenter(String gymID, String gymName, String address, String city, List<Slot> slots) {
+    public GymCenter(String gymID, String gymName, String address, String city, List<Slot> slots, String gymOwnerID) {
         this.gymID = gymID;
         this.gymName = gymName;
         this.address = address;
         this.city = city;
         this.slots=slots;
+        this.gymOwnerID=gymOwnerID;
     }
 
     public String addSlot(String id, LocalDateTime st, LocalDateTime et, int capacity){
@@ -75,7 +77,12 @@ public class GymCenter {
     public String getCity() {
         return city;
     }
-
+    public String getGymOwnerID() {
+        return gymOwnerID;
+    }
+    public void setGymOwnerID(String gymOwnerID) {
+        this.gymOwnerID = gymOwnerID;
+    }
     public void setCity(String city) {
         this.city = city;
     }
