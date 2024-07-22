@@ -1,5 +1,7 @@
+// Package declaration
 package com.flipkart.client;
 
+// Import necessary classes
 import com.flipkart.business.AdminService;
 import java.util.Scanner;
 import com.flipkart.bean.GymCenter;
@@ -9,21 +11,39 @@ import com.flipkart.bean.User;
 import com.flipkart.business.AdminServiceInterface;
 import com.flipkart.business.UserService;
 
+/**
+ * This class represents the menu interface for the admin to manage various
+ * operations related to gym centers, gym owners, and users in the Flipfit system.
+ */
 public class AdminFlipfitMenu {
+
     private Scanner scanner;
-    // private AdminService adminServiceInterface;
+
+    // AdminServiceInterface instance to handle admin-related operations
     private final AdminServiceInterface adminServiceInterface;
+
+    // UserService instance to handle user-related operations
     private UserService userServiceInterface;
 
+    /**
+     * Constructor initializes the scanner and admin service interface.
+     */
     public AdminFlipfitMenu() {
         this.scanner = new Scanner(System.in);
         this.adminServiceInterface = new AdminService();
     }
 
+    /**
+     * Displays the admin menu and handles the admin's choices.
+     *
+     * @param user the admin user
+     */
     public void showMenu(User user) {
         int adminChoice = -1;
 
-        while (adminChoice != 6) {
+        // Loop until the admin chooses to log out
+        while (adminChoice != 7) {
+            // Display admin menu options
             System.out.println("Admin Menu:");
             System.out.println("1. Approve Gym Center");
             System.out.println("2. Approve Gym Owner");
@@ -36,6 +56,7 @@ public class AdminFlipfitMenu {
             adminChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
 
+            // Handle admin's choice
             switch (adminChoice) {
                 case 1:
                     showApproveGymCenterMenu();
@@ -54,6 +75,7 @@ public class AdminFlipfitMenu {
                     break;
                 case 6:
                     changePassword(user);
+                    break;
                 case 7:
                     System.out.println("Logging out.");
                     break;
@@ -63,18 +85,24 @@ public class AdminFlipfitMenu {
         }
     }
 
+    /**
+     * Displays the menu for approving gym centers and handles the choices.
+     */
     private void showApproveGymCenterMenu() {
         int approveChoice = -1;
 
+        // Loop until the admin chooses to go back to the main admin menu
         while (approveChoice != 3) {
+            // Display options for approving gym centers
             System.out.println("Approve Gym Center:");
             System.out.println("1. Approve All Gym Centers");
             System.out.println("2. Approve Gym Center by ID");
             System.out.println("3. Back to Admin Menu");
             System.out.print("Enter your choice: ");
             approveChoice = scanner.nextInt();
-            scanner.nextLine(); // consume the newline
+            scanner.nextLine();
 
+            // Handle admin's choice
             switch (approveChoice) {
                 case 1:
                     adminServiceInterface.approveAllGymCenters();
@@ -93,18 +121,24 @@ public class AdminFlipfitMenu {
         }
     }
 
+    /**
+     * Displays the menu for approving gym owners and handles the choices.
+     */
     private void showApproveGymOwnerMenu() {
         int approveChoice = -1;
 
+        // Loop until the admin chooses to go back to the main admin menu
         while (approveChoice != 3) {
+            // Display options for approving gym owners
             System.out.println("Approve Gym Owner:");
             System.out.println("1. Approve All Gym Owners");
             System.out.println("2. Approve Gym Owner by ID");
             System.out.println("3. Back to Admin Menu");
             System.out.print("Enter your choice: ");
             approveChoice = scanner.nextInt();
-            scanner.nextLine(); // consume the newline
+            scanner.nextLine(); 
 
+            // Handle admin's choice
             switch (approveChoice) {
                 case 1:
                     adminServiceInterface.approveAllGymOwners();
@@ -121,9 +155,13 @@ public class AdminFlipfitMenu {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-
     }
 
+    /**
+     * Allows the admin to change their password.
+     *
+     * @param user the admin user
+     */
     public void changePassword(User user) {
         System.out.println("Enter your Old Password");
         String password = scanner.nextLine();
@@ -134,10 +172,8 @@ public class AdminFlipfitMenu {
             System.out.println("Confirm your Password");
             String confirmPassword = scanner.nextLine();
             userServiceInterface.confirmPassword(user, newPassword, confirmPassword);
-            // System.out.println("Password changed successfully.");
         } else {
             System.out.println("Wrong Old Password.");
         }
     }
-
 }

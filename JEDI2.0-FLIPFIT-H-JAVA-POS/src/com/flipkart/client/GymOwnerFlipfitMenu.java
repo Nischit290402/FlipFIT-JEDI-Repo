@@ -3,19 +3,35 @@ package com.flipkart.client;
 import com.flipkart.business.GymOwnerService;
 import com.flipkart.business.UserService;
 import com.flipkart.bean.User;
+
 import java.util.Scanner;
 
+/**
+ * This class manages the menu and actions available to a Gym Owner.
+ * It provides functionality for registering a gym owner, viewing and adding gym centers,
+ * editing slots, and changing passwords.
+ */
 public class GymOwnerFlipfitMenu {
-    private Scanner scanner;
-    private GymOwnerService gymOwnerServiceInterface;
-    private UserService userServiceInterface;
+    private Scanner scanner; // Scanner instance for user input
+    private GymOwnerService gymOwnerServiceInterface; // Service for managing gym owner operations
+    private UserService userServiceInterface; // Service for managing user operations
 
+    /**
+     * Constructor to initialize the GymOwnerFlipfitMenu with Scanner, GymOwnerService, and UserService.
+     *
+     * @param scanner Scanner instance for user input
+     */
     public GymOwnerFlipfitMenu(Scanner scanner) {
         this.scanner = scanner;
         this.gymOwnerServiceInterface = new GymOwnerService();
         this.userServiceInterface = new UserService();
     }
 
+    /**
+     * Registers a new gym owner by taking input from the user and calling the service to create a gym owner.
+     *
+     * @param scanner Scanner instance for user input
+     */
     public void registerGymOwner(Scanner scanner) {
         System.out.println("Enter your Username");
         String username = scanner.nextLine();
@@ -30,24 +46,32 @@ public class GymOwnerFlipfitMenu {
         System.out.println("Enter your Age");
         int age = Integer.parseInt(scanner.nextLine());
 
-        gymOwnerServiceInterface.createGymOwner(username,name, mail, phone, age, password);
+        gymOwnerServiceInterface.createGymOwner(username, name, mail, phone, age, password);
     }
-//    public void showGymOwnerList() {
-//        gymOwnerServiceInterface.listGymOwners();
-//    }
 
-    public void showMenu(User user){
+    // This method is commented out but can be used to show the list of gym owners.
+    // public void showGymOwnerList() {
+    //     gymOwnerServiceInterface.listGymOwners();
+    // }
+
+    /**
+     * Displays the Gym Owner menu and handles user choices.
+     * Provides options to view all gym centers, add a new gym center, edit gym slots, and logout.
+     *
+     * @param user The currently logged-in gym owner user
+     */
+    public void showMenu(User user) {
         int gymOwnerChoice = -1;
 
-        while (gymOwnerChoice != 6) {
+        while (gymOwnerChoice != 4) { // Updated to 4 for logout
             System.out.println("Gym Owner Menu:");
-            System.out.println("1. View all Gym Center");
+            System.out.println("1. View all Gym Centers");
             System.out.println("2. Add New Gym Center");
             System.out.println("3. Edit Gym Slots");
             System.out.println("4. Logout");
             System.out.print("Enter your choice: ");
             gymOwnerChoice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consume the newline
 
             switch (gymOwnerChoice) {
                 case 1:
@@ -60,28 +84,34 @@ public class GymOwnerFlipfitMenu {
                     gymOwnerServiceInterface.editSlots(user);
                     break;
                 case 4:
-//                    gymOwnerServiceInterface.logout();
+                    System.out.println("Logging out.");
+                    // Optionally call a logout method or handle it here
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
     }
+
+    /**
+     * Changes the password for the currently logged-in user.
+     * Prompts for old password, new password, and confirmation, then updates if valid.
+     *
+     * @param user The currently logged-in user
+     */
     public void changePassword(User user) {
         System.out.println("Enter your Old Password");
         String password = scanner.nextLine();
         boolean flag = userServiceInterface.validatePassword(user, password);
-        if(flag){
+        if (flag) {
             System.out.println("Enter your New Password");
             String newPassword = scanner.nextLine();
             System.out.println("Confirm your Password");
             String confirmPassword = scanner.nextLine();
             userServiceInterface.confirmPassword(user, newPassword, confirmPassword);
-//            System.out.println("Password changed successfully.");
-        }
-        else{
+            // Optionally confirm success message here
+        } else {
             System.out.println("Wrong Old Password.");
         }
     }
-
 }
