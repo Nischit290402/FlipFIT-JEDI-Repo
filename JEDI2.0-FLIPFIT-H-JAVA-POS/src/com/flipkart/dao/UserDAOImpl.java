@@ -100,7 +100,6 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(4, customer.getEmail());
             statement.setString(5, customer.getPhone());
             statement.setInt(6, customer.getAge());
-            System.out.println(statement);
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
