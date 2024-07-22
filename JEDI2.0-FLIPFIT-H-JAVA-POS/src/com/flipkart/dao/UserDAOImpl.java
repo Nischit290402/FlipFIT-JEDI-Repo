@@ -12,10 +12,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAOImpl implements UserDAO {
+        public boolean addRole(Role role) {
+            String sql = "INSERT INTO role (id, role_name) VALUES (?, ?)";
+            try (Connection connection = dbutils.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, role.getRoleID());
+                statement.setString(2, role.getRoleType());
+
+                int rowsInserted = statement.executeUpdate();
+                return rowsInserted > 0;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
 
     @Override
     public User validateUser(String username, String password) {
         String sql = "SELECT * FROM User WHERE username = ? AND password = ?";
+      
         try (Connection connection = dbutils.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, username);
@@ -36,18 +51,36 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
+    public boolean addUser(User user) {
+        String sql = "INSERT INTO user (username, password, userid, roleId) VALUES (?, ?, ?, ?)";
+        try (Connection connection = dbutils.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getUserid());
+            statement.setString(4, user.getRoleId());
+
+            int rowsInserted = statement.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     @Override
     public boolean registerGymOwner(GymOwner gymOwner) {
-        String sql = "INSERT INTO GymOwners (username, name, email, contactNo, age, password, ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO gym_owner (username, userid, name, email, contactNo, age) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dbutils.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gymOwner.getUsername());
-            statement.setString(2, gymOwner.getName());
-            statement.setString(3, gymOwner.getEmail());
-            statement.setString(4, gymOwner.getContactNo());
-            statement.setInt(5, gymOwner.getAge());
-            statement.setString(6, gymOwner.getPassword());
-            statement.setString(7, gymOwner.getUserid());
+            statement.setString(2, gymOwner.getUserid());
+            statement.setString(3, gymOwner.getName());
+            statement.setString(4, gymOwner.getEmail());
+            statement.setString(5, gymOwner.getContactNo());
+            statement.setInt(6, gymOwner.getAge());
+
+
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -58,16 +91,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean registerCustomer(Customer customer) {
-        String sql = "INSERT INTO Customers (username, name, email, contactNo, age, password, ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        String sql = "INSERT INTO customer (username, userid, name, email, contactNo, age) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = dbutils.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, customer.getUsername());
-            statement.setString(2, customer.getName());
-            statement.setString(3, customer.getEmail());
-            statement.setString(4, customer.getPhone());
-            statement.setInt(5, customer.getAge());
-            statement.setString(6, customer.getPassword());
-            statement.setString(7, customer.getUserid());
+            statement.setString(2, customer.getUserid());
+            statement.setString(3, customer.getName());
+            statement.setString(4, customer.getEmail());
+            statement.setString(5, customer.getPhone());
+            statement.setInt(6, customer.getAge());
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {

@@ -1,16 +1,18 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.*;
+import com.flipkart.dao.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import java.util.HashMap;
 
+import static com.flipkart.utils.dbutils.getTableCnt;
+
 public class CustomerService implements CustomerServiceInterface{
-	private int cnt = 1;
+	private int cnt = getTableCnt("user");
 	public HashMap<String, Customer> customers = new HashMap<String, Customer>();
 	UserService userService=new UserService();
 	GymOwnerService gymOwnerService=new GymOwnerService();
@@ -18,14 +20,20 @@ public class CustomerService implements CustomerServiceInterface{
 
 	public void createCustomer(String username, String name, String email, String phone, int age,
                                       String password) {
-		String id = "0" + cnt++;
+		String id = "0" + ++cnt;
 		Role role = new Role("C", "Customer");
 		List<Booking> bookings = new ArrayList<Booking>();
-		Customer customer = new Customer(username, name, email, phone, age, id, password, role.getRoleID(), bookings);
+		Customer customer = new Customer(username, name, email, phone, age, password, id, role.getRoleID(), bookings);
 		customers.put(id, customer);
 		User user = new User(username, password, id, role.getRoleID());
 		userService.addUser(user);
-		System.out.println("Customer created");
+		UserDAOImpl userDAO = new UserDAOImpl();
+		boolean val1 = userDAO.addUser(user);
+		boolean val2 = userDAO.registerCustomer(customer);
+		if(val1 && val2){
+			System.out.println("Customer created");
+		}
+		else System.out.println("Customer creation failed");
 	}
 
 	public void showProfile(String id) {
