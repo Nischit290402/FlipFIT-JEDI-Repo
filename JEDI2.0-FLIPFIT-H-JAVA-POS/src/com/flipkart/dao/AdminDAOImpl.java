@@ -64,8 +64,8 @@ public class AdminDAOImpl {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, 0);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+             ResultSet resultSet = statement.executeQuery();
+                while(resultSet.next()) {
                     String username = resultSet.getString("username");
                     String userid = resultSet.getString("userid");
                     String name = resultSet.getString("name");
@@ -75,8 +75,6 @@ public class AdminDAOImpl {
 
                     GymOwner gymO = new GymOwner(username, name, email, contactNo, age, "password", userid, "B");
                     pendingGymOwners.add(gymO);
-
-                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,8 +92,9 @@ public class AdminDAOImpl {
         try (Connection connection = dbutils.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+             ResultSet resultSet = statement.executeQuery();
+
+                while(resultSet.next()) {
                     String username = resultSet.getString("username");
                     String userid = resultSet.getString("userid");
                     String name = resultSet.getString("name");
@@ -105,8 +104,6 @@ public class AdminDAOImpl {
 
                     GymOwner gymO = new GymOwner(username, name, email, contactNo, age, "password", userid, "B");
                     gymOwners.add(gymO);
-
-                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
