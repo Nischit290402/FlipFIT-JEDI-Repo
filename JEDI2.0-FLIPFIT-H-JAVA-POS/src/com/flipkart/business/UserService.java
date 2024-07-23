@@ -22,7 +22,7 @@ public class UserService implements UserServiceInterface {
     static HashMap<String, User> UsersMap = new HashMap<>();
     // UserDAO instance to interact with the data access layer
     private UserDAOImpl userDAOImpl = new UserDAOImpl();
-    private UserDAO userDAO;
+    private UserDAO userDAO = new UserDAOImpl();
 
     /**
      * Adds a user to the UsersMap
@@ -60,9 +60,10 @@ public class UserService implements UserServiceInterface {
     @Override
     public void confirmPassword(User user, String newPassword, String confirmPassword) {
         if (newPassword.equals(confirmPassword)) {
-            System.out.println("Password Changed Successfully");
             user.setPassword(newPassword);
-            UsersMap.put(user.getUsername(), user);
+            if(userDAO.updateUser(user)){
+                System.out.println("Password Changed Successfully");
+            }
         } else {
             System.out.println("Password did not match");
         }

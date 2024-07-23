@@ -1,6 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.*;
+import com.flipkart.exception.DAOException;
 import com.flipkart.utils.dbutils;
 
 import java.awt.print.Book;
@@ -13,22 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomerDAOImpl implements CustomerDAO {
-//    private static Map<String, List<Slot>> gymSlots = new HashMap<>();
-//    private static List<Booking> bookings = new ArrayList<>();
-//
-//    static {
-//        // Initialize with some sample data
-//        Slot slot1 = new Slot("S1", LocalDateTime.of(2024, 7, 19, 8, 0), LocalDateTime.of(2024, 7, 19, 10, 0), 10);
-//        Slot slot2 = new Slot("S2", LocalDateTime.of(2024, 7, 19, 10, 0), LocalDateTime.of(2024, 7, 19, 12, 0), 10);
-//        gymSlots.put("G1", new ArrayList<>(List.of(slot1, slot2)));
-//    }
-//    public void fetchBookedSlots(String userId) {
-//        for (Booking booking : bookings) {
-//            if (booking.getUserID().equals(userId)) {
-//                System.out.println("Booking ID: " + booking.getBookingID() + ", Gym ID: " + booking.getGymID() + ", Slot ID: " + booking.getSlotID());
-//            }
-//        }
-//    }
+
 //    public void cancelBooking(String GymId ,String slotId, String userId, String date){
 //        Booking bookingToCancel = null;
 //        LocalDate cancellationDate = LocalDate.parse(date);
@@ -89,7 +75,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     public boolean updateProfile(Customer customer){
-        String sql = "UPDATE customers SET username = ?, name = ?, email = ?, contactNo = ?, age = ? WHERE userid = ?";
+        String sql = "UPDATE customer SET username = ?, name = ?, email = ?, contactNo = ?, age = ? WHERE userid = ?";
 
         try (Connection connection = dbutils.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -219,7 +205,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public List<Booking> viewBookings(String userId) {
         List<Booking> bookings = new ArrayList<>();
         String sql = "SELECT b.bookingID, b.gymID, b.slotID, b.date, gc.gymName, s.startTime, s.endTime, s.capacity " +
-                "FROM bookings b " +
+                "FROM booking b " +
                 "JOIN gym_center gc ON b.gymID = gc.gymID " +
                 "JOIN slot s ON b.slotID = s.slotID " +
                 "WHERE b.userID = ?";
@@ -244,7 +230,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                 Timestamp dateTs = rs.getTimestamp("date");
                 LocalDateTime date = dateTs.toLocalDateTime();
 
-                Slot slot = new Slot(slotId, startTime, endTime, capacity);
+                Slot slot = new Slot(slotId, startTime, endTime, capacity, gymId);
                 Booking booking = new Booking(userId, bookingId, gymId, slotId, gymName, slot, date);
                 bookings.add(booking);
             }

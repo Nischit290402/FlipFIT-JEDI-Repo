@@ -8,7 +8,10 @@ import com.flipkart.business.UserService;
 import com.flipkart.dao.CustomerDAO;
 import com.flipkart.dao.CustomerDAOImpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -72,7 +75,7 @@ public class CustomerFlipfitMenu {
         int userChoice = -1;
 
         // Loop until the customer chooses to exit
-        while (userChoice != 6) {
+        while (userChoice != 7) {
             // Display customer menu options
             System.out.println("Customer Menu:");
             System.out.println("1. View Profile");
@@ -134,15 +137,6 @@ public class CustomerFlipfitMenu {
                 .orElse(null);
         if(gymCenter_sel != null){
             List<Slot> slots = gymCenter_sel.getSlots();
-//            System.out.println("Enter year(yyyy): ");
-//            int year=scanner.nextInt();
-//            System.out.println("Enter month(mm): ");
-//            int month=scanner.nextInt();
-//            System.out.println("Enter date(dd): ");
-//            int date=scanner.nextInt();
-//            System.out.println("Enter hour according to 24hrs clock: ");
-//            int hr=scanner.nextInt();
-//            LocalDateTime st=LocalDateTime.of(year, month, date, hr, 0, 0);
             if (slots.isEmpty()) {
                 System.out.println("No slots available for this gym center.");
             }
@@ -156,11 +150,12 @@ public class CustomerFlipfitMenu {
 
                 System.out.print("Choose a slot (enter the number): ");
                 int choice = scanner.nextInt();
-                Slot slot = slots.get(choice);
-                System.out.println("Enter the date for booking (yyyy-MM-dd HH:mm): ");
-                String dateStr = scanner.nextLine();
-                LocalDateTime date = LocalDateTime.parse(dateStr.replace(" ", "T"));
-                if(bookingService.bookSlot(customer.getUserid(), gymCenter_sel, slot, date)){
+                Slot slot = slots.get(choice-1);
+//                System.out.println("Enter the date for booking (yyyy-MM-dd HH:mm): ");
+//                String dateStr = scanner.nextLine();
+//                LocalDateTime date = LocalDateTime.parse(dateStr.replace(" ", "T"));
+//                LocalDateTime date = getEntryTime();
+                if(bookingService.bookSlot(customer.getUserid(), gymCenter_sel, slot)){
                     System.out.println("Booking successful!");
                 }
                 else {
@@ -223,6 +218,23 @@ public class CustomerFlipfitMenu {
         }
     }
 
+    public LocalDateTime getEntryTime(){
+        LocalDateTime date = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        while (date == null) {
+            System.out.println("Enter the date for booking (yyyy-MM-dd HH:mm): ");
+            String dateStr = scanner.nextLine().trim(); // Remove leading/trailing whitespace
+            try {
+                date = LocalDateTime.parse(dateStr, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter the date in the format yyyy-MM-dd HH:mm.");
+            }
+        }
+
+        return date;
+    }
+
     public void viewBookings(String userId) {
         List<Booking> bookings = customerService.viewBookings(userId);
 
@@ -231,9 +243,8 @@ public class CustomerFlipfitMenu {
         } else {
             System.out.println("Bookings for user: " + userId);
             for (Booking booking : bookings) {
-                System.out.println("Booking ID: " + booking.getBookingID());
-                System.out.println("Gym ID: " + booking.getGymID());
-                System.out.println("Slot ID: " + booking.getSlotID());
+                System.out.println("Booking Gym: " + booking.getGymName());
+                System.out.println("Slot Time: " + booking.getSlot().getStarttime() + " - " + booking.getSlot().getEndtime());
                 System.out.println();
             }
         }
@@ -274,11 +285,14 @@ public class CustomerFlipfitMenu {
                 System.out.println(itr + ". " + booking.getGymName() + ": " + booking.getBookingDate() + " Duration: 1hr\n");
                 itr++;
             }
-            System.out.println();
             System.out.println("Choose a booking you wish to cancel(enter the number): ");
             int choice = scanner.nextInt();
-            Booking booking = bookings.get(choice);
-            bookingService.cancelSlotBooking(userId, booking.getBookingDate());
+            Booking booking = bookings.get(choice-1);
+            if(bookingService.cancelSlotBooking(userId, booking.getBookingDate())){
+                System.out.println("Slot Cancelled");
+            } else {
+                System.out.println("Cancellation unsuccessful!!");
+            }
         }
     }
 

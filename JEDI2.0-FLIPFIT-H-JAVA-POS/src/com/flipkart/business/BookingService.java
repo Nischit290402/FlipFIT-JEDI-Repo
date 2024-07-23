@@ -56,19 +56,20 @@ public class BookingService {
         return customerDAO.cancelBooking(userID, date);
     }
 
-    public Boolean bookSlot(String userid, GymCenter gymCenter, Slot slot_sel, LocalDateTime bookingDate){
+    public Boolean bookSlot(String userid, GymCenter gymCenter, Slot slot_sel){
         sharedState.incrementCntBookings();
         String bkid = "0" + sharedState.getCntBookings();
 
+        LocalDateTime bookingDate = slot_sel.getStarttime();
         Booking newbooking = new Booking(userid, bkid, gymCenter.getGymID(), slot_sel.getSlotID(), bookingDate);
         if(slot_sel.getCapacity()>0){
 //            If slot_sel already exists under current userID in booking --> CancelThisBooking()
             if(customerDAO.bookingExists(newbooking)){
-                cancelSlotBooking(newbooking.getUserID(), bookingDate);
-                System.out.println("Previous overlapping booking is cancelled.");
-            } else {
-                System.out.println("Previous overlapping booking is cancellation Err.");
-                return false;
+                if(cancelSlotBooking(newbooking.getUserID(), bookingDate)){
+                    System.out.println("Previous overlapping booking is cancelled.");
+                } else {
+                    System.out.println("Previous overlapping booking cancellation Err.");
+                }
             }
             if(customerDAO.addBooking(newbooking)){
                 customerDAO.updateCapacity(newbooking.getSlotID(), -1);

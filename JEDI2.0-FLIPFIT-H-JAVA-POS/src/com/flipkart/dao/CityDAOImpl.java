@@ -66,7 +66,7 @@ public class CityDAOImpl implements CityDAO{
                     LocalDateTime endTime = resultSet.getTimestamp("endTime").toLocalDateTime();
                     int capacity = resultSet.getInt("capacity");
 
-                    Slot slot = new Slot(slotID, startTime, endTime, capacity);
+                    Slot slot = new Slot(slotID, startTime, endTime, capacity, gymID);
                     slots.add(slot);
                 }
             }

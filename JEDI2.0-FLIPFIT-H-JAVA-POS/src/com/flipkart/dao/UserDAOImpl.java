@@ -12,20 +12,39 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAOImpl implements UserDAO {
-        public boolean addRole(Role role) {
-            String sql = "INSERT INTO role (id, role_name) VALUES (?, ?)";
-            try (Connection connection = dbutils.getConnection();
-                 PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, role.getRoleID());
-                statement.setString(2, role.getRoleType());
+    public boolean addRole(Role role) {
+        String sql = "INSERT INTO role (id, role_name) VALUES (?, ?)";
+        try (Connection connection = dbutils.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, role.getRoleID());
+            statement.setString(2, role.getRoleType());
 
-                int rowsInserted = statement.executeUpdate();
-                return rowsInserted > 0;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return false;
+            int rowsInserted = statement.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
+    }
+
+    @Override
+    public boolean updateUser(User user){
+        String sql = "UPDATE user SET username = ?, password = ? WHERE userid = ?";
+
+        try (Connection conn = dbutils.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getUserid());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            dbutils.closeConnection();
+        }
+        return false;
+    }
 
     @Override
     public User validateUser(String username, String password) {
@@ -64,6 +83,8 @@ public class UserDAOImpl implements UserDAO {
             return rowsInserted > 0;
         } catch (SQLException e){
             e.printStackTrace();
+        } finally {
+            dbutils.closeConnection();
         }
         return false;
     }

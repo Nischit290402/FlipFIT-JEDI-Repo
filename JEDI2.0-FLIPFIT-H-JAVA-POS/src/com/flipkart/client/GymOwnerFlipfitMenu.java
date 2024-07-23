@@ -64,12 +64,13 @@ public class GymOwnerFlipfitMenu {
     public void showMenu(GymOwner gymOwner) {
         int gymOwnerChoice = -1;
 
-        while (gymOwnerChoice != 4) { // Updated to 4 for logout
+        while (gymOwnerChoice != 5) { // Updated to 4 for logout
             System.out.println("Gym Owner Menu:");
             System.out.println("1. View all Gym Centers");
             System.out.println("2. Add New Gym Center");
             System.out.println("3. Edit Gym Slots");
-            System.out.println("4. Logout");
+            System.out.println("4. Change Password");
+            System.out.println("5. Logout");
             System.out.print("Enter your choice: ");
             gymOwnerChoice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline
@@ -85,8 +86,10 @@ public class GymOwnerFlipfitMenu {
                     gymOwnerServiceInterface.editSlots(gymOwner);
                     break;
                 case 4:
+                    changePassword(gymOwner);
+                    break;
+                case 5:
                     System.out.println("Logging out.");
-                    // Optionally call a logout method or handle it here
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -110,7 +113,6 @@ public class GymOwnerFlipfitMenu {
             System.out.println("Confirm your Password");
             String confirmPassword = scanner.nextLine();
             userServiceInterface.confirmPassword(user, newPassword, confirmPassword);
-            // Optionally confirm success message here
         } else {
             System.out.println("Wrong Old Password.");
         }

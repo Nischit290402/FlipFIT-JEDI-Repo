@@ -79,7 +79,7 @@ public class GymOwnerService implements GymOwnerServiceInterface {
         if(val1 && val2){
             System.out.println("Gym Owner registered successfully");
         }
-        else System.out.println("Customer creation failed");
+        else System.out.println("Gym Owner creation failed");
     }
 
     /**
@@ -105,7 +105,7 @@ public class GymOwnerService implements GymOwnerServiceInterface {
 //        GymOwnerMap.put(user.getUserid(), GymOwner);
 
         if(gymOwnerDAO.addGymCenter(gymCenter)){
-            System.out.println("Gym Owner registered successfully");
+            System.out.println("Gym Center registered successfully");
             return true;
         }
         else {
@@ -123,7 +123,7 @@ public class GymOwnerService implements GymOwnerServiceInterface {
         List<GymCenter> gymCenters = gymOwnerDAO.getGymCenters(user.getUserid());
 //        print all gym centers
         for (GymCenter gymCenter : gymCenters) {
-            System.out.println("Gym ID: " + gymCenter.getGymID() + ", Gym Name: " + gymCenter.getGymName());
+            System.out.println("Gym Name: " + gymCenter.getGymName());
         }
     }
 
@@ -149,12 +149,12 @@ public class GymOwnerService implements GymOwnerServiceInterface {
 //        GymOwner go = GymOwnerMap.get(user.getUserid());
         for (GymCenter gc : gymCenters) {
             if (gc.getCity().equals(city)) {
-                System.out.println(c + ". Gym ID: " + gc.getGymID() + ", Gym Name: " + gc.getGymName());
+                System.out.println(c + "Gym Name: " + gc.getGymName());
 //                System.out.println(c + ". " + gc.getGymName());
                 c++;
             }
         }
-        System.out.println("Enter Gym ID: ");
+        System.out.println("Enter Gym(choose option): ");
         String gid= scanner.nextLine();
         System.out.println("1. Add Slot");
         System.out.println("2. Remove Slot");
@@ -171,10 +171,10 @@ public class GymOwnerService implements GymOwnerServiceInterface {
                     int month = scanner.nextInt();
                     System.out.println("Enter date(dd): ");
                     int date = scanner.nextInt();
-                    System.out.println("Enter hour according to 24hrs clock: ");
+                    System.out.println("Enter hour according to 24hrs clock(0-23): ");
                     int hr = scanner.nextInt();
                     LocalDateTime st = LocalDateTime.of(year, month, date, hr, 0, 0);
-                    System.out.println("Enter capacity of slot: ");
+                    System.out.println("Enter capacity of slot(Number of vacancies): ");
                     int cp = scanner.nextInt();
                     Slot slt = new Slot(id, st, st.plusHours(1),cp,gid);
                     gymOwnerDAO.addSlots(gid, slt);

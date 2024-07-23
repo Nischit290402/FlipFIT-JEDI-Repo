@@ -19,10 +19,13 @@ public class AdminService implements AdminServiceInterface {
         Role role = new Role("A","ADMIN");
         Admin admin = new Admin("bean", "BeanAdmin", "bean@gmail.com", "1234567890", 0, "bean@1234", "00", role.getRoleID());
         User user = new User(admin.getUsername(), admin.getPassword(), admin.getUserid(), admin.getRoleId());
-        userService.addUser(user);
+//        userService.addUser(user);
 //        sharedState.incrementCntUsers();
-        if (userDAO.addUser(user)) {
-            System.out.println("User added successfully");
+        User u = userDAO.validateUser(user.getUsername(), user.getPassword());
+        if (u == null) {
+            if (userDAO.addUser(user)) {
+                System.out.println("User added successfully");
+            }
         }
     }
 
@@ -79,7 +82,6 @@ public class AdminService implements AdminServiceInterface {
 
     private void listGymCenterDetails(Map.Entry<String, GymCenter> entry) {
         GymCenter gym = entry.getValue();
-        System.out.println("Gym ID: " + gym.getGymID());
         System.out.println("Gym Name: " + gym.getGymName());
         System.out.println("Address: " + gym.getAddress());
         System.out.println("City: " + gym.getCity());
