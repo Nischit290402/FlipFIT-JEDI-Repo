@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `flipfit` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `flipfit`;
 -- MySQL dump 10.13  Distrib 8.0.38, for macos14 (arm64)
 --
 -- Host: 127.0.0.1    Database: flipfit
@@ -39,15 +41,6 @@ CREATE TABLE `booking` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `booking`
---
-
-LOCK TABLES `booking` WRITE;
-/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `city`
 --
 
@@ -60,16 +53,6 @@ CREATE TABLE `city` (
   PRIMARY KEY (`cityID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `city`
---
-
-LOCK TABLES `city` WRITE;
-/*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES ('01','city1');
-/*!40000 ALTER TABLE `city` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `customer`
@@ -92,16 +75,6 @@ CREATE TABLE `customer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customer`
---
-
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES ('abc','01','abcd','abc','abc',45);
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `gym_center`
 --
 
@@ -114,21 +87,12 @@ CREATE TABLE `gym_center` (
   `address` varchar(255) NOT NULL,
   `city` varchar(45) NOT NULL,
   `gymOwnerID` varchar(45) NOT NULL,
+  `approval` int NOT NULL,
   PRIMARY KEY (`gymID`),
   KEY `gymOwnerID_idx` (`gymOwnerID`),
   CONSTRAINT `gymOwnerID` FOREIGN KEY (`gymOwnerID`) REFERENCES `gym_owner` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gym_center`
---
-
-LOCK TABLES `gym_center` WRITE;
-/*!40000 ALTER TABLE `gym_center` DISABLE KEYS */;
-INSERT INTO `gym_center` VALUES ('GC1','gym1','GYM1','city1','02');
-/*!40000 ALTER TABLE `gym_center` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `gym_owner`
@@ -144,22 +108,13 @@ CREATE TABLE `gym_owner` (
   `email` varchar(100) NOT NULL,
   `contactNo` varchar(20) NOT NULL,
   `age` int NOT NULL,
+  `approval` int NOT NULL,
   PRIMARY KEY (`username`,`userid`),
   UNIQUE KEY `userid_UNIQUE` (`userid`),
   KEY `gym_owner_user_fk` (`userid`),
   CONSTRAINT `gym_owner_user_fk` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gym_owner`
---
-
-LOCK TABLES `gym_owner` WRITE;
-/*!40000 ALTER TABLE `gym_owner` DISABLE KEYS */;
-INSERT INTO `gym_owner` VALUES ('gym','02','gym','gym','gym',22);
-/*!40000 ALTER TABLE `gym_owner` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `role`
@@ -174,16 +129,6 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `role`
---
-
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES ('A','Admin'),('B','GymOwner'),('C','Customer');
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `slot`
@@ -205,16 +150,6 @@ CREATE TABLE `slot` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `slot`
---
-
-LOCK TABLES `slot` WRITE;
-/*!40000 ALTER TABLE `slot` DISABLE KEYS */;
-INSERT INTO `slot` VALUES ('S0','2024-11-11 11:00:00','2024-11-11 12:00:00',0,'GC1');
-/*!40000 ALTER TABLE `slot` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user`
 --
 
@@ -232,16 +167,6 @@ CREATE TABLE `user` (
   CONSTRAINT `roleId` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('bean','bean@1234','00','A'),('abc','abcd','01','C'),('gym','gym','02','B');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -252,4 +177,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-23 18:17:59
+-- Dump completed on 2024-07-23 22:34:40
