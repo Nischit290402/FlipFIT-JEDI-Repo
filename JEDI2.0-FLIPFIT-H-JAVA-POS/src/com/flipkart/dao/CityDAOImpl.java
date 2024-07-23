@@ -30,8 +30,24 @@ public class CityDAOImpl implements CityDAO{
     }
 
     @Override
-    public City getCity(String cityName) {
-        return null;
+    public List<City> getAllCities() {
+        List<City> cities = new ArrayList<>();
+        String sql = "SELECT * FROM city";
+
+        try (Connection conn = dbutils.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                City city = new City(rs.getString("cityID"), rs.getString("cityName"));
+                cities.add(city);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbutils.closeConnection();
+        }
+
+        return cities;
     }
 
     // Method to add a city

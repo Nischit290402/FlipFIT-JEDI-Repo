@@ -146,33 +146,22 @@ public class CustomerDAOImpl implements CustomerDAO {
         return false;
     }
 
-    public boolean cancelBooking(String userID, LocalDateTime bookingDate) {
-        String getSlotIDSql = "SELECT slotID FROM booking WHERE userID = ? AND date = ?";
-        String deleteBookingSql = "DELETE FROM booking WHERE userID = ? AND date = ?";
+    public boolean cancelBooking(String userID, String slotID) {
+        String deleteBookingSql = "DELETE FROM booking WHERE userID = ? AND slotID = ?";
 
         try (Connection conn = dbutils.getConnection();
-             PreparedStatement getSlotIDStmt = conn.prepareStatement(getSlotIDSql);
              PreparedStatement deleteBookingStmt = conn.prepareStatement(deleteBookingSql)) {
-
-            // Retrieve the slotID
-            getSlotIDStmt.setString(1, userID);
-            getSlotIDStmt.setTimestamp(2, Timestamp.valueOf(bookingDate));
-            ResultSet rs = getSlotIDStmt.executeQuery();
-
-            if (rs.next()) {
-                String retrievedSlotID = rs.getString("slotID");
 
                 // Delete the booking
                 deleteBookingStmt.setString(1, userID);
-                deleteBookingStmt.setTimestamp(2, Timestamp.valueOf(bookingDate));
+                deleteBookingStmt.setString(2, slotID);
                 int rowsDeleted = deleteBookingStmt.executeUpdate();
 
                 if (rowsDeleted > 0) {
                     // Update the slot capacity
-                    updateCapacity(retrievedSlotID, 1);
+                    updateCapacity(slotID, 1);
                     return true;
                 }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
