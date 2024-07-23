@@ -16,6 +16,9 @@ public class CustomerService implements CustomerServiceInterface{
 //	private int cnt = getTableCnt("user");
 	public HashMap<String, Customer> customers = new HashMap<String, Customer>();
 	UserService userService=new UserService();
+	private CustomerDAO customerDAO = new CustomerDAOImpl();
+	private CityDAO cityDAO = new CityDAOImpl();
+
 
 	Scanner scanner = new Scanner(System.in);
 
@@ -38,8 +41,8 @@ public class CustomerService implements CustomerServiceInterface{
 		else System.out.println("Customer creation failed");
 	}
 
-	public void showProfile(String id) {
-		Customer customer = customers.get(id);
+	public void showProfile(Customer customer) {
+//		Customer customer = customers.get(id);
 		if (customer != null) {
 			System.out.println("Username: " + customer.getUsername());
 			System.out.println("Name: " + customer.getName());
@@ -51,13 +54,16 @@ public class CustomerService implements CustomerServiceInterface{
 		}
 	}
 
-	public void viewbookings(String userid) {
-		List<pair<Booking, Boolean>> bl=customers.get(userid).getBookings();
-		int c=1;
-		for(pair<Booking, Boolean> bll:bl){
-			System.out.println(c+". Gym Name: "+bll.getFirst().getGymCenter().getGymName()+", Slot Time: "+bll.getFirst().getStarttime()+", Booking Status: "+bll.getSecond()+".");
-			c++;
-		}
+	public List<Booking> viewBookings(String userId) {
+		return customerDAO.viewBookings(userId);
+	}
+
+	public boolean editProfile(Customer customer) {
+		return customerDAO.updateProfile(customer);
+	}
+
+	public List<GymCenter> getGymCenters(String city) {
+		return cityDAO.fetchGymCenters(city);
 	}
 
 }

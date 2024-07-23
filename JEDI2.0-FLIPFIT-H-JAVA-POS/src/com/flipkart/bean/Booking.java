@@ -11,11 +11,39 @@ public class Booking {
     private String bookingID;
 
     // The gym center where the booking is made.
-    private GymCenter gymCenter;
+    private String gymID;
 
     // The start time of the booking.
-    private LocalDateTime starttime;
+    private String slotID;
 
+    private String gymName;
+    private Slot slot;
+
+    public LocalDateTime getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(LocalDateTime bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Slot slot) {
+        this.slot = slot;
+    }
+
+    public String getGymName() {
+        return gymName;
+    }
+
+    public void setGymName(String gymName) {
+        this.gymName = gymName;
+    }
+
+    private LocalDateTime bookingDate;
     /* Constructor to initialize a Booking object.
     Parameters:
        userID: ID of the user making the booking.
@@ -23,11 +51,22 @@ public class Booking {
        gymCenter: GymCenter object representing the gym where booking is made.
        starttime: LocalDateTime object representing the start time of the booking.
      */
-    public Booking(String userID, String bookingID, GymCenter gymCenter, LocalDateTime starttime) {
+    public Booking(String userID, String bookingID, String gymID, String slotID, LocalDateTime bookingDate) {
         this.userID = userID;
         this.bookingID = bookingID;
-        this.gymCenter = gymCenter;
-        this.starttime = starttime;
+        this.gymID = gymID;
+        this.slotID = slotID;
+        this.bookingDate = bookingDate;
+    }
+
+    public Booking(String userId, String bookingId, String gymId, String slotId, String gymName, Slot slot, LocalDateTime date) {
+        this.userID = userId;
+        this.bookingID = bookingId;
+        this.gymID = gymId;
+        this.slotID = slotId;
+        this.slot = slot;
+        this.bookingDate = date;
+        this.gymName = gymName;
     }
 
     // Getter for userID.
@@ -51,22 +90,15 @@ public class Booking {
     }
 
     // Getter for gymCenter.
-    public GymCenter getGymCenter() {
-        return gymCenter;
-    }
+    public String getGymID() { return gymID; }
 
     // Setter for gymCenter.
-    public void setGymCenter(GymCenter gymCenter) {
-        this.gymCenter = gymCenter;
+    public void setGymID(String gymID) {
+        this.gymID = gymID;
     }
 
-    // Getter for starttime.
-    public LocalDateTime getStarttime() {
-        return starttime;
-    }
+    public String getSlotID() { return slotID; }
 
-    // Setter for starttime.
-    public void setStarttime(LocalDateTime starttime) {
-        this.starttime = starttime;
-    }
+    public void setSlotID(String slotID) { this.slotID = slotID; }
+
 }

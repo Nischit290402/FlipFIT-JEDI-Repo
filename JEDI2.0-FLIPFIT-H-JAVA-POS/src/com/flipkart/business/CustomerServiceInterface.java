@@ -1,6 +1,10 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.Booking;
+import com.flipkart.bean.Customer;
 import com.flipkart.bean.User;
+
+import java.util.List;
 
 /**
  * Interface defining the operations related to customer services.
@@ -24,16 +28,16 @@ public interface CustomerServiceInterface {
     /**
      * Displays the profile information of a customer by their ID.
      *
-     * @param id the ID of the customer
+     * @param customer the object of class Customer
      */
-    public void showProfile(String id);
+    public void showProfile(Customer customer);
 
     /**
      * Displays the bookings of a customer by their customer ID.
      *
-     * @param customerId the ID of the customer
+     * @param userId the ID of the user
      */
-    void viewbookings(String customerId);
+    public List<Booking> viewBookings(String userId);
 
     /**
      * Cancels the bookings of a customer by their user ID.
@@ -45,8 +49,8 @@ public interface CustomerServiceInterface {
     /**
      * Edits the profile information of a customer.
      *
-     * @param user the User object containing updated profile information
+     * @param customer the Customer object containing updated profile information
 //     */
-//    public void editProfile(User user);
+    public boolean editProfile(Customer customer);
 
 }
