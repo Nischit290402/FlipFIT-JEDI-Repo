@@ -45,13 +45,15 @@ public class AdminFlipfitMenu {
         while (adminChoice != 7) {
             // Display admin menu options
             System.out.println("Admin Menu:");
-            System.out.println("1. Approve Gym Center");
-            System.out.println("2. Approve Gym Owner");
-            System.out.println("3. List Gym Owners");
-            System.out.println("4. List Gym Centers");
-            System.out.println("5. List Users");
-            System.out.println("6. Change Password");
-            System.out.println("7. Logout");
+            System.out.println("1. List pending Gym Owners");
+            System.out.println("2. List pending Gym Center");
+            System.out.println("3. Approve Gym Center");
+            System.out.println("4. Approve Gym Owner");
+            System.out.println("5. List Gym Owners");
+            System.out.println("6. List Gym Centers");
+            System.out.println("7. List Users");
+            System.out.println("8. Change Password");
+            System.out.println("9. Logout");
             System.out.print("Enter your choice: ");
             adminChoice = scanner.nextInt();
             scanner.nextLine(); // consume the newline
@@ -59,26 +61,32 @@ public class AdminFlipfitMenu {
             // Handle admin's choice
             switch (adminChoice) {
                 case 1:
-                    showApproveGymCenterMenu();
+                    adminServiceInterface.listPendingGymOwners();
                     break;
                 case 2:
-                    showApproveGymOwnerMenu();
+                    adminServiceInterface.listPendingGymCenters();
                     break;
                 case 3:
-                    adminServiceInterface.listGymOwners();
+                    showApproveGymCenterMenu();
                     break;
                 case 4:
-                    adminServiceInterface.listGymCenters();
+                    showApproveGymOwnerMenu();
                     break;
                 case 5:
-                    adminServiceInterface.listUsers();
+                    adminServiceInterface.listGymOwners();
                     break;
                 case 6:
-                    changePassword(user);
+                    adminServiceInterface.listGymCenters();
                     break;
                 case 7:
-                    System.out.println("Logging out.");
+                    adminServiceInterface.listUsers();
                     break;
+                case 8:
+                    changePassword(user);
+                    break;
+                case 9:
+                    System.out.println("Logging out.");
+                    return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
@@ -144,6 +152,7 @@ public class AdminFlipfitMenu {
                     adminServiceInterface.approveAllGymOwners();
                     break;
                 case 2:
+
                     System.out.print("Enter Gym Owner ID: ");
                     String Id = scanner.nextLine();
                     adminServiceInterface.approveGymOwnerById(Id);

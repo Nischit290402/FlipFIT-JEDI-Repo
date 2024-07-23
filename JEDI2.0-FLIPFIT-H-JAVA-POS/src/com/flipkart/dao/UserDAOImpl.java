@@ -91,7 +91,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean registerGymOwner(GymOwner gymOwner) {
-        String sql = "INSERT INTO gym_owner (username, userid, name, email, contactNo, age) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO gym_owner (username, userid, name, email, contactNo, age,approval) VALUES (?, ?, ?, ?, ?, ?,?)";
         try (Connection connection = dbutils.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, gymOwner.getUsername());
@@ -100,8 +100,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(4, gymOwner.getEmail());
             statement.setString(5, gymOwner.getContactNo());
             statement.setInt(6, gymOwner.getAge());
-
-
+            statement.setInt(7,0);
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {

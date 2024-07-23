@@ -13,7 +13,7 @@ import java.util.List;
 
 public class GymOwnerDAOImpl implements GymOwnerDAO {
     public boolean addGymCenter(GymCenter gymCenter) {
-        String sql = "INSERT INTO gym_center (gymID,gymName,address,city,gymOwnerID) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO gym_center (gymID,gymName,address,city,gymOwnerID,approval) VALUES (?,?,?,?,?,?)";
 //        String sql = "INSERT INTO Customeromers (username, name, email, contactNo, age, password, ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dbutils.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)){
@@ -22,6 +22,7 @@ public class GymOwnerDAOImpl implements GymOwnerDAO {
             statement.setString(3, gymCenter.getAddress());
             statement.setString(4, gymCenter.getCity());
             statement.setString(5, gymCenter.getGymOwnerID());
+            statement.setInt(6,0);
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -48,9 +49,12 @@ public class GymOwnerDAOImpl implements GymOwnerDAO {
                 String address = resultSet.getString("address");
                 String city = resultSet.getString("city");
                 String gymOwnerID = resultSet.getString("gymOwnerID");
-                List<Slot> slots=new ArrayList<>();
-                GymCenter gymCenter = new GymCenter(gymID, gymName, address, city,slots, gymOwnerID);
-                gymCenters.add(gymCenter);
+                int approval = resultSet.getInt("approval");
+                if(approval==1) {
+                    List<Slot> slots = new ArrayList<>();
+                    GymCenter gymCenter = new GymCenter(gymID, gymName, address, city, slots, gymOwnerID);
+                    gymCenters.add(gymCenter);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
