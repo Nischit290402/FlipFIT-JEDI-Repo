@@ -124,7 +124,7 @@ public class FlipfitApplication {
                     System.out.println("Welcome Customer !!!");
                     Customer customer = customerDAOImpl.getCustomer(user);
                     CustomerFlipfitMenu customerFlipfitMenu = new CustomerFlipfitMenu(scanner);
-                    customerFlipfitMenu.showMenu(user);
+                    customerFlipfitMenu.showMenu(customer);
                     break;
                 default:
                     System.out.println("Invalid role. Please try again.");

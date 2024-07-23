@@ -1,4 +1,5 @@
 package com.flipkart.business;
+import java.sql.SQLException;
 import java.util.*;
 
 import com.flipkart.bean.*;
@@ -20,7 +21,7 @@ public class AdminService implements AdminServiceInterface {
         User user = new User(admin.getUsername(), admin.getPassword(), admin.getUserid(), admin.getRoleId());
         userService.addUser(user);
 //        sharedState.incrementCntUsers();
-        if(userDAO.addUser(user)) {
+        if (userDAO.addUser(user)) {
             System.out.println("User added successfully");
         }
     }

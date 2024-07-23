@@ -41,6 +41,13 @@ public class Slot {
 //        this.waitings = waitings != null ? waitings : new ArrayList<>();   // Initialize waitings list if null.
     }
 
+    public Slot(String slotID, LocalDateTime startTime, LocalDateTime endTime, int capacity) {
+        this.slotID = slotID;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.capacity = capacity;
+    }
+
     // Getter for waitings.
     public List<Booking> getWaitings() {
         return waitings;

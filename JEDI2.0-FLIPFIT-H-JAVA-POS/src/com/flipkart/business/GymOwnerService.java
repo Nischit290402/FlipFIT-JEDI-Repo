@@ -49,11 +49,16 @@ public class GymOwnerService implements GymOwnerServiceInterface {
      * Searches for a gym center by name and city.
      */
     public GymCenter searchcitygc(String name, String city) {
-        for (GymCenter i : cityGymcenters.get(city)) {
-            if (i.getGymName().equals(name)) {
-                return i;
+        List<GymCenter> gymCenters = cityGymcenters.get(city.toLowerCase());
+
+        if (gymCenters != null) {
+            for (GymCenter gymCenter : gymCenters) {
+                if (gymCenter.getGymName().equalsIgnoreCase(name)) {
+                    return gymCenter;
+                }
             }
         }
+
         return null;
     }
 
@@ -84,7 +89,7 @@ public class GymOwnerService implements GymOwnerServiceInterface {
         if (!cityDAO.cityExists(cityName)) {
             sharedState.incrementCntCity();
             String cityId = "0" + sharedState.getCntCity();
-            City citydao = new City(cityId, cityName);
+            City citydao = new City(cityId, cityName.toLowerCase());
             boolean cityAdded = cityDAO.addCity(citydao);
             if (!cityAdded) {
                 System.out.println("Failed to add city");
@@ -94,7 +99,7 @@ public class GymOwnerService implements GymOwnerServiceInterface {
         sharedState.incrementCntCenters();
         String gym_id = "GC" + sharedState.getCntCenters();
         List<Slot> slots=new ArrayList<>();
-        GymCenter gymCenter = new GymCenter(gym_id, gymName, address, cityName, slots, gymOwner.getUserid());
+        GymCenter gymCenter = new GymCenter(gym_id, gymName.toLowerCase(), address, cityName.toLowerCase(), slots, gymOwner.getUserid());
 
 //        AdminService.pendingCenters.put(gym_id, gymCenter);
 //        GymOwnerMap.put(user.getUserid(), GymOwner);
