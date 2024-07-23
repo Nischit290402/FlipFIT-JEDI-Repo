@@ -4,21 +4,24 @@ import java.util.List;
 
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
+import com.flipkart.bean.User;
 
 public interface AdminDAO {
     public List<GymOwner> getAllGymOwners();
 
-    public List<GymCenter> getAllGyms();
+    public List<GymCenter> getAllGymCenters();
 
-    public List<GymOwner> getPendingGymOwnerRequests();
+    public List<GymOwner> getPendingGymOwners();
 
     public List<GymCenter> getPendingGymRequests();
 
-    public void approveSingleOwnerRequest(String gymOwnerEmail);
+    public boolean approveGymCenter(String gymId);
 
-    public void approveAllOwnerRequest();
+    public boolean approveAllGymCenter();
 
-    public void approveSingleGymRequest(String gymId);
+    public boolean approveGymOwner(String userID);
 
-    public void approveAllGymRequest();
+    public boolean approveAllGymOwner();
+
+    public List<User> getAllUser();
 }
