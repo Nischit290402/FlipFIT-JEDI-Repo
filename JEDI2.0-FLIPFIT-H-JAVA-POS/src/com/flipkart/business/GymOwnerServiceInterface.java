@@ -7,6 +7,8 @@ import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.Role;
 import com.flipkart.bean.User;
 
+import java.util.List;
+
 /**
  * This interface defines the operations related to gym owners.
  * This includes creating a gym owner, adding gym centers, showing gym centers,
@@ -32,6 +34,8 @@ public interface GymOwnerServiceInterface {
     /**
      * Edits the slots for the gym centers associated with the given user.
      */
-    public void editSlots(User user);
+    public void editSlots(GymOwner gymOwner);
+
+    public boolean searchGC(String gymID, List<GymCenter> gymCenters);
 
 }
