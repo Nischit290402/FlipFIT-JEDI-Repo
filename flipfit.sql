@@ -178,3 +178,9 @@ CREATE TABLE `user` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-07-23 22:34:40
+
+LOCK TABLES `role` WRITE;
+INSERT INTO flipfit.role(id, role_name) VALUES ('A', 'Admin');
+INSERT INTO flipfit.role(id, role_name) VALUES ('B', 'GymOwner');
+INSERT INTO flipfit.role(id, role_name) VALUES ('C', 'Customer');
+UNLOCK TABLES;

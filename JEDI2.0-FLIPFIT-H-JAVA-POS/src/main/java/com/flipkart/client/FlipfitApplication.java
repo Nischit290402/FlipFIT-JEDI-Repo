@@ -42,13 +42,13 @@ public class FlipfitApplication {
         int choice = -1;
 
         // Main menu loop
-        while (choice != 5) {
+        while (choice != 4) {
             System.out.println("Welcome to the Flipfit Application:");
             System.out.println("1. Login");
             System.out.println("2. Registration of the GYM Customer");
             System.out.println("3. Registration of the GYM Owner");
-            System.out.println("4. Change Password");
-            System.out.println("5. Exit");
+//            System.out.println("4. Change Password");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -72,11 +72,11 @@ public class FlipfitApplication {
                         e.printStackTrace();
                     }
                     break;
+//                case 4:
+//                    // Change password
+//                    forgotPasswordMenu.forgotpassword(scanner);
+//                    break;
                 case 4:
-                    // Change password
-                    forgotPasswordMenu.forgotpassword(scanner);
-                    break;
-                case 5:
                     // Exit the application
                     System.out.println("Exiting the application.");
                     break;

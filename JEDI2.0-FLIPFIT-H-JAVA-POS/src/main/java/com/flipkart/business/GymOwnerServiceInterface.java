@@ -36,6 +36,6 @@ public interface GymOwnerServiceInterface {
      */
     public void editSlots(GymOwner gymOwner);
 
-    public boolean searchGC(String gymID, List<GymCenter> gymCenters);
+//    public boolean searchGC(String gymID, List<GymCenter> gymCenters);
 
 }
