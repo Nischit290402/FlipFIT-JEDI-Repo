@@ -141,69 +141,91 @@ public class GymOwnerService implements GymOwnerServiceInterface {
      * Edits the slots for the gym centers associated with the given user.
      */
     public void editSlots(GymOwner gymOwner) {
-        System.out.println("Enter City: ");
-        Scanner scanner1=new Scanner(System.in);
-        String city = scanner1.nextLine();
-        int c = 1;
-        List<GymCenter> gymCenters = gymOwnerDAO.getGymCenters(gymOwner.getUserid());
+        try{
+
+            System.out.println("Enter City: ");
+            Scanner scanner1=new Scanner(System.in);
+            String city = scanner1.nextLine();
+            int c = 1;
+            List<GymCenter> gymCenters = gymOwnerDAO.getGymCenters(gymOwner.getUserid());
+            if(gymCenters.isEmpty()){
+                System.out.println("No Gym Center found");
+                return;
+            }
 
 //        GymOwner go = GymOwnerMap.get(user.getUserid());
-        for (GymCenter gc : gymCenters) {
-            if (gc.getCity().equals(city)) {
-                System.out.println(c + ". Gym Name: " + gc.getGymName());
-//                System.out.println(c + ". " + gc.getGymName());
-                c++;
+            for (GymCenter gc : gymCenters) {
+                if (gc.getCity().equals(city)) {
+                    System.out.println(c + ". Gym Name: " + gc.getGymName());
+                    System.out.println(c + ". " + gc.getGymName());
+                    c++;
+                }
             }
-        }
-        System.out.println("Enter Gym(choose option): ");
-        int gid= scanner.nextInt();
-        System.out.println("1. Add Slot");
-        System.out.println("2. Remove Slot");
-        int ch = scanner.nextInt();
-        switch (ch) {
-            case 1:
-                if (gid>=gymCenters.size()) {
+            System.out.println("Enter Gym(choose option): ");
+            int gid=0 ;
+            while (gid == 0) {
+                String userInput = scanner.nextLine();
+                try {
+                    gid = Integer.parseInt(userInput);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: not an integer");
+                }
+            }
+
+            System.out.println("1. Add Slot");
+            System.out.println("2. Remove Slot");
+            int ch = scanner.nextInt();
+            switch (ch) {
+                case 1:
+                    if (gid>=gymCenters.size()) {
 //                    GymCenter gc = searchGC(gid,gymCenters);
-                    sharedState.incrementCntSlot();
-                    String id = "S" + sharedState.getCntSlot();
-                    System.out.println("Enter year(yyyy): ");
-                    int year = scanner.nextInt();
-                    System.out.println("Enter month(mm): ");
-                    int month = scanner.nextInt();
-                    System.out.println("Enter date(dd): ");
-                    int date = scanner.nextInt();
-                    System.out.println("Enter hour according to 24hrs clock(0-23): ");
-                    int hr = scanner.nextInt();
-                    LocalDateTime st = LocalDateTime.of(year, month, date, hr, 0, 0);
-                    System.out.println("Enter capacity of slot(Number of vacancies): ");
-                    int cp = scanner.nextInt();
-                    Slot slt = new Slot(id, st, st.plusHours(1),cp,gymCenters.get(gid-1).getGymID());
-                    gymOwnerDAO.addSlots(gymCenters.get(gid-1).getGymID(), slt);
+                        sharedState.incrementCntSlot();
+                        String id = "S" + sharedState.getCntSlot();
+                        System.out.println("Enter year(yyyy): ");
+                        int year = scanner.nextInt();
+                        System.out.println("Enter month(mm): ");
+                        int month = scanner.nextInt();
+                        System.out.println("Enter date(dd): ");
+                        int date = scanner.nextInt();
+                        System.out.println("Enter hour according to 24hrs clock(0-23): ");
+                        int hr = scanner.nextInt();
+                        if(hr>24 || hr<0 || month>12 || month<0 || date > 31 || date < 0){
+                            System.out.println("Invalid Date & Time");
+                            break;
+                        }
+                        LocalDateTime st = LocalDateTime.of(year, month, date, hr, 0, 0);
+                        System.out.println("Enter capacity of slot(Number of vacancies): ");
+                        int cp = scanner.nextInt();
+                        Slot slt = new Slot(id, st, st.plusHours(1),cp,gymCenters.get(gid-1).getGymID());
+                        gymOwnerDAO.addSlots(gymCenters.get(gid-1).getGymID(), slt);
 //                    String result = gc.addSlot(id, st, st.plusHours(1), cp);
 //                    System.out.println(result);
-                } else {
-                    System.out.println("Invalid Gym ID.");
-                }
-                break;
-            case 2:
-                if (gid>=gymCenters.size()) {
+                    } else {
+                        System.out.println("Invalid Gym ID.");
+                    }
+                    break;
+                case 2:
+                    if (gid>=gymCenters.size()) {
 //                    GymCenter gc = searchGC(gid, gymCenters);
-                    System.out.println("Enter year(yyyy): ");
-                    int year = scanner.nextInt();
-                    System.out.println("Enter month(mm): ");
-                    int month = scanner.nextInt();
-                    System.out.println("Enter date(dd): ");
-                    int date = scanner.nextInt();
-                    System.out.println("Enter hour according to 24hrs clock: ");
-                    int hr = scanner.nextInt();
-                    LocalDateTime st = LocalDateTime.of(year, month, date, hr, 0, 0);
-                    gymOwnerDAO.removeSlot(gymCenters.get(gid-1).getGymID(),st);
-                } else {
-                    System.out.println("Invalid Gym ID.");
-                }
-                break;
-            default:
-                System.out.println("Invalid choice, please try again.");
+                        System.out.println("Enter year(yyyy): ");
+                        int year = scanner.nextInt();
+                        System.out.println("Enter month(mm): ");
+                        int month = scanner.nextInt();
+                        System.out.println("Enter date(dd): ");
+                        int date = scanner.nextInt();
+                        System.out.println("Enter hour according to 24hrs clock: ");
+                        int hr = scanner.nextInt();
+                        LocalDateTime st = LocalDateTime.of(year, month, date, hr, 0, 0);
+                        gymOwnerDAO.removeSlot(gymCenters.get(gid-1).getGymID(),st);
+                    } else {
+                        System.out.println("Invalid Gym ID.");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
+            }
+        }catch(Exception e){
+            System.out.println("Something went wrong, please try again.");
         }
     }
 }

@@ -127,7 +127,7 @@ public class GymOwnerFlipfitMenu {
         System.out.println("Enter Gym Centre City: ");
         String city = scanner.nextLine();
         if(gymOwnerServiceInterface.addGymCenter(gymOwner, gymName, address, city)){
-            System.out.println("Gym Center registered successfully.");
+//            System.out.println("Gym Center registered successfully.");
         }
         else {
             System.out.println("Error registering Gym Center.");

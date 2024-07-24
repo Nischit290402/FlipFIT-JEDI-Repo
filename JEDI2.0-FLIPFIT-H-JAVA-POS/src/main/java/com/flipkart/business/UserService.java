@@ -38,12 +38,7 @@ public class UserService implements UserServiceInterface {
     @Override
     public User login(String username, String password) throws InvalidLogin {
         // Fetch the user from user DB based on the provided username
-        User user = userDAOImpl.validateUser(username, password);
-        if (user!=null) {
-            return user;
-        } else {
-            throw new InvalidLogin("Username not found.");
-        }
+        return userDAOImpl.validateUser(username, password);
     }
 
     /**

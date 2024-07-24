@@ -24,17 +24,17 @@ public class AdminGymFlipFITController {
         return "Hello, Flipkart!";
     }
 
-//    @GET
-//    @Path("/gym-owners/pending")
-//    public Response listPendingGymOwners() {
-//        return Response.ok(adminServiceInterface.listPendingGymOwners()).build();
-//    }
+    @GET
+    @Path("/gym-owners/pending")
+    public Response listPendingGymOwners() {
+        return Response.ok(adminServiceInterface.listPendingGymOwners()).build();
+    }
 //
-//    @GET
-//    @Path("/gym-centers/pending")
-//    public Response listPendingGymCenters() {
-//        return Response.ok(adminServiceInterface.listPendingGymCenters()).build();
-//    }
+    @GET
+    @Path("/gym-centers/pending")
+    public Response listPendingGymCenters() {
+        return Response.ok(adminServiceInterface.listPendingGymCenters()).build();
+    }
 
     @POST
     @Path("/gym-centers/approve/all")
